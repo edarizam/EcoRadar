@@ -1,0 +1,252 @@
+country_id,Entity,Code,continent_id
+1,Afghanistan,AFG,6
+2,Africa,,7
+3,Africa (BP),,7
+4,Africa (Ember),,7
+5,Albania,ALB,5
+6,Algeria,DZA,1
+7,American Samoa,ASM,7
+8,Angola,AGO,1
+9,Antigua and Barbuda,ATG,2
+10,Argentina,ARG,3
+11,Armenia,ARM,5
+12,Aruba,ABW,3
+13,Asia,,7
+14,Asia (Ember),,7
+15,Asia Pacific (BP),,7
+16,Australia,AUS,4
+17,Austria,AUT,5
+18,Azerbaijan,AZE,5
+19,Bahamas,BHS,2
+20,Bahrain,BHR,6
+21,Bangladesh,BGD,6
+22,Barbados,BRB,2
+23,Belarus,BLR,5
+24,Belgium,BEL,5
+25,Belize,BLZ,2
+26,Benin,BEN,1
+27,Bermuda,BMU,2
+28,Bhutan,BTN,6
+29,Bolivia,BOL,3
+30,Bosnia and Herzegovina,BIH,5
+31,Botswana,BWA,1
+32,Brazil,BRA,3
+33,British Virgin Islands,VGB,7
+34,Brunei,BRN,6
+35,Bulgaria,BGR,5
+36,Burkina Faso,BFA,1
+37,Burundi,BDI,1
+38,CIS (BP),,7
+39,Cambodia,KHM,6
+40,Cameroon,CMR,1
+41,Canada,CAN,2
+42,Cape Verde,CPV,1
+43,Cayman Islands,CYM,7
+44,Central African Republic,CAF,1
+45,Central America (BP),,7
+46,Chad,TCD,1
+47,Chile,CHL,3
+48,China,CHN,6
+49,Colombia,COL,3
+50,Comoros,COM,1
+51,Congo,COG,1
+52,Cook Islands,COK,7
+53,Costa Rica,CRI,2
+54,Cote d'Ivoire,CIV,1
+55,Croatia,HRV,5
+56,Cuba,CUB,2
+57,Cyprus,CYP,5
+58,Czechia,CZE,5
+59,Democratic Republic of Congo,COD,1
+60,Denmark,DNK,5
+61,Djibouti,DJI,1
+62,Dominica,DMA,2
+63,Dominican Republic,DOM,2
+64,Eastern Africa (BP),,7
+65,Ecuador,ECU,3
+66,Egypt,EGY,1
+67,El Salvador,SLV,2
+68,Equatorial Guinea,GNQ,1
+69,Eritrea,ERI,1
+70,Estonia,EST,5
+71,Eswatini,SWZ,1
+72,Ethiopia,ETH,1
+73,Europe,,7
+74,Europe (BP),,7
+75,Europe (Ember),,7
+76,European Union (27),,7
+77,European Union (27) (Ember),,7
+78,Faeroe Islands,FRO,7
+79,Falkland Islands,FLK,7
+80,Fiji,FJI,4
+81,Finland,FIN,5
+82,France,FRA,5
+83,French Guiana,GUF,7
+84,French Polynesia,PYF,7
+85,G20 (Ember),,7
+86,G7 (Ember),,7
+87,Gabon,GAB,1
+88,Gambia,GMB,1
+89,Georgia,GEO,5
+90,Germany,DEU,5
+91,Ghana,GHA,1
+92,Gibraltar,GIB,7
+93,Greece,GRC,5
+94,Greenland,GRL,2
+95,Grenada,GRD,2
+96,Guadeloupe,GLP,7
+97,Guam,GUM,4
+98,Guatemala,GTM,2
+99,Guinea,GIN,1
+100,Guinea-Bissau,GNB,1
+101,Guyana,GUY,3
+102,Haiti,HTI,2
+103,High-income countries,,7
+104,Honduras,HND,2
+105,Hong Kong,HKG,6
+106,Hungary,HUN,5
+107,Iceland,ISL,5
+108,India,IND,6
+109,Indonesia,IDN,6
+110,Iran,IRN,6
+111,Iraq,IRQ,6
+112,Ireland,IRL,5
+113,Israel,ISR,6
+114,Italy,ITA,5
+115,Jamaica,JAM,2
+116,Japan,JPN,6
+117,Jordan,JOR,6
+118,Kazakhstan,KAZ,6
+119,Kenya,KEN,1
+120,Kiribati,KIR,4
+121,Kosovo,OWID_KOS,5
+122,Kuwait,KWT,6
+123,Kyrgyzstan,KGZ,6
+124,Laos,LAO,6
+125,Latin America and Caribbean (Ember),,7
+126,Latvia,LVA,5
+127,Lebanon,LBN,6
+128,Lesotho,LSO,1
+129,Liberia,LBR,1
+130,Libya,LBY,1
+131,Lithuania,LTU,5
+132,Low-income countries,,7
+133,Lower-middle-income countries,,7
+134,Luxembourg,LUX,5
+135,Macao,MAC,6
+136,Madagascar,MDG,1
+137,Malawi,MWI,1
+138,Malaysia,MYS,6
+139,Maldives,MDV,6
+140,Mali,MLI,1
+141,Malta,MLT,5
+142,Martinique,MTQ,7
+143,Mauritania,MRT,1
+144,Mauritius,MUS,1
+145,Mexico,MEX,2
+146,Middle Africa (BP),,7
+147,Middle East (BP),,7
+148,Moldova,MDA,5
+149,Mongolia,MNG,6
+150,Montenegro,MNE,5
+151,Montserrat,MSR,7
+152,Morocco,MAR,1
+153,Mozambique,MOZ,1
+154,Myanmar,MMR,6
+155,Namibia,NAM,1
+156,Nauru,NRU,4
+157,Nepal,NPL,6
+158,Netherlands,NLD,5
+159,New Caledonia,NCL,7
+160,New Zealand,NZL,4
+161,Nicaragua,NIC,2
+162,Niger,NER,1
+163,Nigeria,NGA,1
+164,Niue,NIU,7
+165,Non-OECD (BP),,7
+166,North America,,7
+167,North America (BP),,7
+168,North America (Ember),,7
+169,North Korea,PRK,6
+170,North Macedonia,MKD,5
+171,Norway,NOR,5
+172,OECD (BP),,7
+173,OECD (Ember),,7
+174,Oceania,,7
+175,Oceania (Ember),,7
+176,Oman,OMN,6
+177,Pakistan,PAK,6
+178,Palestine,PSE,6
+179,Panama,PAN,2
+180,Papua New Guinea,PNG,4
+181,Paraguay,PRY,3
+182,Peru,PER,3
+183,Philippines,PHL,6
+184,Poland,POL,5
+185,Portugal,PRT,5
+186,Puerto Rico,PRI,2
+187,Qatar,QAT,6
+188,Reunion,REU,7
+189,Romania,ROU,5
+190,Russia,RUS,6
+191,Rwanda,RWA,1
+192,Saint Helena,SHN,7
+193,Saint Kitts and Nevis,KNA,2
+194,Saint Lucia,LCA,2
+195,Saint Pierre and Miquelon,SPM,7
+196,Saint Vincent and the Grenadines,VCT,2
+197,Samoa,WSM,4
+198,Sao Tome and Principe,STP,1
+199,Saudi Arabia,SAU,6
+200,Senegal,SEN,1
+201,Serbia,SRB,5
+202,Seychelles,SYC,1
+203,Sierra Leone,SLE,1
+204,Singapore,SGP,6
+205,Slovakia,SVK,5
+206,Slovenia,SVN,5
+207,Solomon Islands,SLB,4
+208,Somalia,SOM,1
+209,South Africa,ZAF,1
+210,South America,,7
+211,South Korea,KOR,6
+212,South Sudan,SSD,1
+213,South and Central America (BP),,7
+214,Spain,ESP,5
+215,Sri Lanka,LKA,6
+216,Sudan,SDN,1
+217,Suriname,SUR,3
+218,Sweden,SWE,5
+219,Switzerland,CHE,5
+220,Syria,SYR,6
+221,Taiwan,TWN,6
+222,Tajikistan,TJK,6
+223,Tanzania,TZA,1
+224,Thailand,THA,6
+225,Timor,TLS,7
+226,Togo,TGO,1
+227,Tonga,TON,4
+228,Trinidad and Tobago,TTO,2
+229,Tunisia,TUN,1
+230,Turkey,TUR,5
+231,Turkmenistan,TKM,6
+232,Turks and Caicos Islands,TCA,7
+233,USSR,OWID_USS,7
+234,Uganda,UGA,1
+235,Ukraine,UKR,5
+236,United Arab Emirates,ARE,6
+237,United Kingdom,GBR,5
+238,United States,USA,2
+239,United States Virgin Islands,VIR,7
+240,Upper-middle-income countries,,7
+241,Uruguay,URY,3
+242,Uzbekistan,UZB,6
+243,Vanuatu,VUT,4
+244,Venezuela,VEN,3
+245,Vietnam,VNM,6
+246,Western Africa (BP),,7
+247,Western Sahara,ESH,7
+248,World,OWID_WRL,7
+249,Yemen,YEM,6
+250,Zambia,ZMB,1
+251,Zimbabwe,ZWE,1
