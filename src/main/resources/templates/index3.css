@@ -1,0 +1,278 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Contenedor principal */
+.contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+/* Estilos generales para los botones de imagen */
+.image-btn,
+.logo-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.image-btn img {
+    width: 34px;
+    height: 30px;
+}
+
+.logo-btn img {
+    width: 110px;
+    height: 63px;
+}
+
+/* Estilo para los botones de autenticación */
+.auth {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para Register */
+.Register {
+    background-color: #959fa8;
+    font-size: 18px;
+}
+
+.Register:hover {
+    background-color: #505357;
+}
+
+/* Estilos para Login */
+.Login {
+    background-color: #28a745;
+    font-size: 16px;
+}
+
+.Login:hover {
+    background-color: #218838;
+}
+
+/* Contenedor de la imagen de fondo */
+.contenedor-imagen {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+/* Imagen de fondo */
+.imagen-fondo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Contenedor del texto dentro de la imagen */
+.texto-superpuesto {
+    position: absolute;
+    top: 12%; /* Se movió más arriba */
+    left: 10%;
+    color: white;
+    text-align: left;
+    max-width: 600px;
+}
+
+/* Estilo del título */
+.titulo {
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+/* Estilo de la descripción */
+.descripcion {
+    font-size: 22px;
+    line-height: 1.5;
+}
+
+/* Contenedor de los botones dentro de la imagen */
+.botones-imagen {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Estilos para los botones dentro de la imagen */
+.Rankings, 
+.Comparaciones {
+    width: 168px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    background-color: #000;
+    font-size: 18px;
+}
+.Rankings:hover,
+.Comparaciones:hover {
+    background-color: #333;
+}
+
+/* Estilo del título */
+.subtitulo {
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+.texto-superpuesto-centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+.botones-imagen2 {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Estilos para los botones dentro de la imagen */
+.Masinfo, 
+.Rankings2 {
+    width: 168px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    background-color: #000;
+    font-size: 18px;
+}
+.Masinfo:hover,
+.Rankings2:hover {
+    background-color: #333;
+}
+
+/* Sección verde corregida */
+.section {
+    width: 100%; /* Asegura que ocupe todo el ancho de la página */
+    height: auto; /* Se ajusta automáticamente al contenido */
+    min-height: 40px; /* Asegura una altura mínima */
+    padding: 19px 40px;
+    background-color: #427f12;
+    text-align: left;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box; /* Evita que padding afecte el tamaño total */
+    margin: 0; /* Elimina márgenes que podrían generar espacios */
+}
+
+/* Estilos para el texto */
+.section p {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/* Estilos para el Footer */
+.Navigation-Footer {
+    width: 100%; /* Ahora ocupa todo el ancho */
+    height: 264px;
+    margin-top: 21px;
+    padding: 0 60px 48px 80px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Contenedor interno */
+.footer-container {
+    width: 100%;
+    max-width: 1440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Misin {
+    width: 624px;
+    height: 58px;
+    margin: 40px 240px 39px 52px;
+    font-family: Inter;
+    font-size: 48px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.96px;
+    text-align: center;
+    color: #000;
+}
+
+
+
+
+
+
+
+/* Estilos del texto EcoRadar */
+.EcoRadar {
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #000;
+}
+
+/* Contenedor de enlaces */
+.sobre-nosotros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Estilos de los enlaces */
+.Sobre-Nosotros,
+.Acerca-de,
+.Quienes-Somos,
+.Contacto {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #454545;
+}
+
+/* Imagen */
+.tt img {
+    width: 219px;
+    height: 98px;
+    object-fit: contain;
+}
