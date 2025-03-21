@@ -18,6 +18,6 @@ public class Region {
     @Column(name = "region_id")
     private Integer id;
 
-    @Column(name = "region")
-    private String region;
+    @Column(name = "name")
+    private String name;
 }

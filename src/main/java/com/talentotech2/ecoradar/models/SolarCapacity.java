@@ -23,10 +23,10 @@ public class SolarCapacity {
 
     @ManyToOne
     @JoinColumn(name = "location_id")
-    private Location locationId;
+    private Location location;
 
     @ManyToOne
     @JoinColumn(name = "year_id")
-    private Year yearId;
+    private Year year;
 
 }

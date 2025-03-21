@@ -19,15 +19,15 @@ public class Location {
     @Column(name = "location_id")
     private Integer id;
 
-    @Column(name = "location")
-    private String location;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "code")
     private String code;
 
     @ManyToOne
     @JoinColumn(name = "region_id")
-    private Region regionId;
+    private Region region;
 
     @OneToMany(mappedBy = "id")
     private List<Consumption> consumptions;
