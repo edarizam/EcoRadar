@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ConsumptionDataDTO {
+public class DefaultDataDTO {
     private String location;
     private int year;
     private Double hydroData;

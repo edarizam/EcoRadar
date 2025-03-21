@@ -1,6 +1,6 @@
 package com.talentotech2.ecoradar.controllers;
 
-import com.talentotech2.ecoradar.dto.ConsumptionDataDTO;
+import com.talentotech2.ecoradar.dto.DefaultDataDTO;
 import com.talentotech2.ecoradar.models.Consumption;
 import com.talentotech2.ecoradar.services.ConsumptionServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class ConsumptionController {
     private ConsumptionServices consumptionServices;
 
     @GetMapping("/compare/{locationId}/{startYear}/{endYear}")
-    public List<ConsumptionDataDTO> findConsumptionByLocationAndYearsRange(
+    public List<DefaultDataDTO> findConsumptionByLocationAndYearsRange(
             @PathVariable Integer locationId,
             @PathVariable int startYear,
             @PathVariable int endYear) {
@@ -27,22 +27,22 @@ public class ConsumptionController {
     }
 
     @GetMapping("/hranking/{year}")
-    public List<ConsumptionDataDTO> findTop10HydroConsumptionsByYear(@PathVariable int year) {
+    public List<DefaultDataDTO> findTop10HydroConsumptionsByYear(@PathVariable int year) {
         return consumptionServices.findTop10HydroConsumptionsByYear(year);
     }
 
     @GetMapping("/wranking/{year}")
-    public List<ConsumptionDataDTO> findTop10WindConsumptionsByYear(@PathVariable int year) {
+    public List<DefaultDataDTO> findTop10WindConsumptionsByYear(@PathVariable int year) {
         return consumptionServices.findTop10WindConsumptionsByYear(year);
     }
 
     @GetMapping("/sranking/{year}")
-    public List<ConsumptionDataDTO> findTop10SolarConsumptionsByYear(@PathVariable int year) {
+    public List<DefaultDataDTO> findTop10SolarConsumptionsByYear(@PathVariable int year) {
         return consumptionServices.findTop10SolarConsumptionsByYear(year);
     }
 
     @GetMapping("/branking/{year}")
-    public List<ConsumptionDataDTO> findTop10BioAndOtherConsumptionsByYear(@PathVariable int year) {
+    public List<DefaultDataDTO> findTop10BioAndOtherConsumptionsByYear(@PathVariable int year) {
         return consumptionServices.findTop10BioAndOtherConsumptionsByYear(year);
     }
 }
