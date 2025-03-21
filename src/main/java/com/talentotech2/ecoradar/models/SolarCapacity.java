@@ -19,7 +19,7 @@ public class SolarCapacity {
     private Integer id;
 
     @Column(name = "solar_capacity")
-    private double renewablePercent;
+    private double solarCapacityPercent;
 
     @ManyToOne
     @JoinColumn(name = "location_id")

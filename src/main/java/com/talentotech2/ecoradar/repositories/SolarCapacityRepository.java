@@ -2,6 +2,7 @@ package com.talentotech2.ecoradar.repositories;
 
 
 import com.talentotech2.ecoradar.models.SolarCapacity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,10 @@ public interface SolarCapacityRepository extends JpaRepository<SolarCapacity, In
             @Param("startYear") int startYear,
             @Param("endYear") int endYear);
 
+    @Query("SELECT s " +
+            "FROM SolarCapacity s " +
+            "WHERE s.year.year = :year")
+    List<SolarCapacity> findTop10SolarCapacityByYear(
+            @Param("year") int year,
+            Pageable pageable);
 }

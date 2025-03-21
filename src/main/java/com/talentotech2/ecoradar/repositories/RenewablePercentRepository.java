@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.repositories;
 
 import com.talentotech2.ecoradar.models.RenewablePercent;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +23,10 @@ public interface RenewablePercentRepository extends JpaRepository<RenewablePerce
             @Param("startYear") int startYear,
             @Param("endYear") int endYear);
 
-
+    @Query("SELECT r " +
+            "FROM RenewablePercent r " +
+            "WHERE r.year.year = :year")
+    List<RenewablePercent> findTop10RenewablePercent(
+            @Param("year") int year,
+            Pageable pageable);
 }
