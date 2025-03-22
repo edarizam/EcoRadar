@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selección de Datos Energéticos</title>
+    <link rel="stylesheet" href="../static/CSS/formulario.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="../static/JS/formulario.js" defer></script>
+  </head>
+  <body>
+    <h1>Selección de Datos Energéticos</h1>
+
+    <div class="main-container">
+      <!-- 📊 Tipo de Información -->
+      <div class="container">
+        <h2>📊 Tipo de Información</h2>
+        <label for="studyOption">Selecciona una opción:</label>
+        <select id="studyOption">
+          <option value="">Selecciona una opción</option>
+          <option value="Consumo">Consumo</option>
+          <option value="Producción">Producción</option>
+          <option value="Capacidad Solar">Capacidad Solar</option>
+          <option value="Energía Renovable">
+            Porcentaje de Energía Renovable
+          </option>
+        </select>
+      </div>
+
+      <!-- ⚡ Tipo de Energía -->
+      <div class="container" id="energyContainer">
+        <h2>⚡ Tipo de Energía</h2>
+        <label for="energyType">Selecciona un tipo de energía:</label>
+        <select id="energyType">
+          <option value="">Selecciona un tipo de energía</option>
+          <option value="Eólica">Eólica</option>
+          <option value="Hidráulica">Hidráulica</option>
+          <option value="Bioenergía">Biomasa</option>
+          <option value="Otras">Otras</option>
+        </select>
+      </div>
+
+      <!-- 🔍 Búsqueda por Continente o País -->
+      <div class="container">
+        <h2>🔍 Búsqueda por Continente o País</h2>
+        <label for="searchType">¿Cómo deseas buscar?</label>
+        <select id="searchType">
+          <option value="">Selecciona una opción</option>
+          <option value="continent">Por Continente</option>
+          <option value="country">Por País</option>
+        </select>
+      </div>
+
+      <!-- 🌍 Selección de Región -->
+      <div class="container">
+        <h2>🌍 País</h2>
+        <label for="countries"></label>
+        <select id="countries">
+          <option value="">Selecciona un país</option>
+        </select>
+      </div>
+
+      <!-- 🌍 Selección de Región -->
+      <div class="container">
+        <h2>🌍 País adicional</h2>
+        <label for="countries"></label>
+        <select id="countries">
+          <option value="">Selecciona un país</option>
+        </select>
+      </div>
+
+      <div class="container">
+        <h2>🌍 Contienente</h2>
+        <label for="continentSelect"></label>
+        <select id="continentSelect">
+          <option value="">Selecciona un continente</option>
+          <option value="africa">África</option>
+          <option value="north-america">América del Norte</option>
+          <option value="south-america">América del Sur</option>
+          <option value="asia">Asia</option>
+          <option value="europe">Europa</option>
+          <option value="oceania">Oceanía</option>
+        </select>
+
+        <label for="countrySelect">País del continente:</label>
+        <select id="countrySelect" disabled>
+          <option value="">Selecciona un país</option>
+        </select>
+      </div>
+
+      <!-- 🌍 Selección de Región Adicional -->
+      <div class="container">
+        <h2>🌍 Continente adicional</h2>
+        <label for="continentSelect1"></label>
+        <select id="continentSelect1">
+          <option value="">Selecciona un continente</option>
+          <option value="africa">África</option>
+          <option value="north-america">América del Norte</option>
+          <option value="south-america">América del Sur</option>
+          <option value="asia">Asia</option>
+          <option value="europe">Europa</option>
+          <option value="oceania">Oceanía</option>
+        </select>
+
+        <label for="countrySelect1">País del continente:</label>
+        <select id="countrySelect1" disabled>
+          <option value="">Selecciona un país</option>
+        </select>
+      </div>
+
+      <!-- 📅 Año Inicial -->
+      <div class="container">
+        <h2>📅 Año Inicial</h2>
+        <label for="yearStart">Selecciona el año:</label>
+        <select id="yearStart"></select>
+      </div>
+
+      <!-- 📅 Año Final -->
+      <div class="container">
+        <h2>📅 Año Final</h2>
+        <label for="yearEnd">Selecciona el año:</label>
+        <select id="yearEnd"></select>
+      </div>
+    </div>
+    <!-- 🔍 Botón de Consulta -->
+    <div class="btn-container">
+      <button id="consultarBtn" class="btn-consultar">🔍 Consultar</button>
+    </div>
+
+    <div>
+      <h1 id="dynamicHeading"></h1>
+    </div>
+
+    <!-- 📊 Gráfica -->
+    <div class="chart-container">
+      <canvas id="myChart"></canvas>
+    </div>
+  </body>
+</html>
