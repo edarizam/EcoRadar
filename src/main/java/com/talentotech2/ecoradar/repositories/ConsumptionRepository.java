@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.repositories;
 
 import com.talentotech2.ecoradar.dto.DefaultDataDTO;
+import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.model.Consumption;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,4 +34,10 @@ public interface ConsumptionRepository extends JpaRepository<Consumption, Intege
     List<DefaultDataDTO> findTop10ConsumptionsByYear(
             @Param("year") int year,
             Pageable pageable);
+
+    @Query("SELECT new com.talentotech2.ecoradar.dto.YearDataDTO(" +
+            "c.location.name, c.year.year) " +
+            "FROM Consumption c " +
+            "WHERE c.location.id = :locationId ")
+    List<YearDataDTO> findYearsAvailableByLocation(@Param("locationId") Integer locationId);
 }

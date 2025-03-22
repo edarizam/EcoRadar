@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.controllers;
 
 import com.talentotech2.ecoradar.dto.DefaultDataDTO;
+import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.services.ProductionService;
 import com.talentotech2.ecoradar.util.DefaultPageable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class ProductionController {
             @PathVariable int startYear,
             @PathVariable int endYear) {
         return productionService.findProductionByLocationAndYearsRange(locationId, startYear, endYear);
+    }
+
+    @GetMapping("/year/{locationId}")
+    public List<YearDataDTO> findYearsAvailableByLocationId(@PathVariable Integer locationId) {
+        return productionService.findYearsByLocationId(locationId);
     }
 
     @GetMapping("/{source}/ranking/{year}")

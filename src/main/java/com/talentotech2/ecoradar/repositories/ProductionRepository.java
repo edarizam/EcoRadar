@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.repositories;
 
 import com.talentotech2.ecoradar.dto.DefaultDataDTO;
+import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.model.Production;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,5 +34,11 @@ public interface ProductionRepository extends JpaRepository<Production, Integer>
     List<DefaultDataDTO> findTop10ProductionByYear(
             @Param("year") int year,
             Pageable pageable);
+
+    @Query("SELECT new com.talentotech2.ecoradar.dto.YearDataDTO(" +
+            "p.location.name, p.year.year) " +
+            "FROM Production p " +
+            "WHERE p.location.id = :locationId ")
+    List<YearDataDTO> findYearsAvailableByLocation(@Param("locationId") Integer locationId);
 
 }

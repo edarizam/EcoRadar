@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.services;
 
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
+import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.repositories.RenewablePercentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,5 +27,9 @@ public class RenewablePercentService {
 
     public List<PercentageDataDTO> findTop10RenewablePercent(int year) {
         return renewablePercentRepository.findTop10RenewablePercent(year, pageable);
+    }
+
+    public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
+        return renewablePercentRepository.findYearsAvailableByLocation(locationId);
     }
 }
