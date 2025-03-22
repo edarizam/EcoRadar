@@ -1,5 +1,6 @@
 package com.talentotech2.ecoradar.services;
 
+import com.talentotech2.ecoradar.dto.PercentageDataDTO;
 import com.talentotech2.ecoradar.models.RenewablePercent;
 import com.talentotech2.ecoradar.repositories.RenewablePercentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,11 @@ public class RenewablePercentService {
             10,
             Sort.by("renewablePercent").descending());
 
-    List<RenewablePercent> findRenewablePercentByLocationAndRangeYear(Integer locationId, int startYear, int endYear) {
+    public List<PercentageDataDTO> findRenewablePercentByLocationAndRangeYear(Integer locationId, int startYear, int endYear) {
         return renewablePercentRepository.findRenewablePercentByLocationAndRangeYear(locationId, startYear, endYear);
     }
 
-    List<RenewablePercent> findTop10RenewablePercent(int year) {
+    public List<PercentageDataDTO> findTop10RenewablePercent(int year) {
         return renewablePercentRepository.findTop10RenewablePercent(year, pageable);
     }
 }

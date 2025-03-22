@@ -18,7 +18,7 @@ public class RenewablePercent {
     @Column(name = "renewable_percent_id")
     private Integer id;
 
-    @Column(name = "renewables_percent")
+    @Column(name = "percent")
     private double renewablePercent;
 
     @ManyToOne

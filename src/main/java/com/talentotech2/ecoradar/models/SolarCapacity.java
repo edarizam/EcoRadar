@@ -18,7 +18,7 @@ public class SolarCapacity {
     @Column(name = "solar_capacity_id")
     private Integer id;
 
-    @Column(name = "solar_capacity")
+    @Column(name = "percent")
     private double solarCapacityPercent;
 
     @ManyToOne
