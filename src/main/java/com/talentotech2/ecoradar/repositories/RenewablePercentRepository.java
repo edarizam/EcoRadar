@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.repositories;
 
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
+import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.model.RenewablePercent;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,4 +34,10 @@ public interface RenewablePercentRepository extends JpaRepository<RenewablePerce
     List<PercentageDataDTO> findTop10RenewablePercent(
             @Param("year") int year,
             Pageable pageable);
+
+    @Query("SELECT new com.talentotech2.ecoradar.dto.YearDataDTO(" +
+            "r.location.name, r.year.year) " +
+            "FROM RenewablePercent r " +
+            "WHERE r.location.id = :locationId ")
+    List<YearDataDTO> findYearsAvailableByLocation(@Param("locationId") Integer locationId);
 }
