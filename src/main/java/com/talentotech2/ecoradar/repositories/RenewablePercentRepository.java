@@ -29,7 +29,6 @@ public interface RenewablePercentRepository extends JpaRepository<RenewablePerce
             "r.location.name, r.year.year, r.renewablePercent)  " +
             "FROM RenewablePercent r " +
             "WHERE r.year.year = :year " +
-            "AND r.renewablePercent <> 0 " +
             "AND r.location.region.id <= 6")
     List<PercentageDataDTO> findTop10RenewablePercent(
             @Param("year") int year,
