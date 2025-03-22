@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.controllers;
 
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
+import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.services.RenewablePercentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,11 @@ public class RenewablePercentController {
             @PathVariable int startYear,
             @PathVariable int endYear) {
         return renewablePercentService.findRenewablePercentByLocationAndRangeYear(locationId, startYear, endYear);
+    }
+
+    @GetMapping("/year/{locationId}")
+    public List<YearDataDTO> findYearsAvailableByLocationId(@PathVariable Integer locationId) {
+        return renewablePercentService.findYearsByLocationId(locationId);
     }
 
     @GetMapping("/ranking/best/{year}")

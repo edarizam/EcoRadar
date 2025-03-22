@@ -22,7 +22,7 @@ public class ConsumptionServices {
         return consumptionRepository.findTop10ConsumptionsByYear(year, pageable);
     }
 
-    public List<YearDataDTO> findYearsByLocationId(int year) {
-        return consumptionRepository.findYearsAvailableByLocation(year);
+    public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
+        return consumptionRepository.findYearsAvailableByLocation(locationId);
     }
 }

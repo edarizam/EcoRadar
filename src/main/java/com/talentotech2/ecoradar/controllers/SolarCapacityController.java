@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.controllers;
 
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
+import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.repositories.SolarCapacityRepository;
 import com.talentotech2.ecoradar.services.SolarCapacityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class SolarCapacityController {
             @PathVariable int startYear,
             @PathVariable int endYear) {
         return  solarCapacityService.findSolarCapacityByLocationAndRangeYear(locationId, startYear, endYear);
+    }
+
+    @GetMapping("/year/{locationId}")
+    public List<YearDataDTO> findYearsAvailableByLocationId(@PathVariable Integer locationId) {
+        return solarCapacityService.findYearsByLocationId(locationId);
     }
 
     @GetMapping("/ranking/best/{year}")

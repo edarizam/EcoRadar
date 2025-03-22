@@ -29,7 +29,7 @@ public class RenewablePercentService {
         return renewablePercentRepository.findTop10RenewablePercent(year, pageable);
     }
 
-    public List<YearDataDTO> findYearsByLocationId(int year) {
-        return renewablePercentRepository.findYearsAvailableByLocation(year);
+    public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
+        return renewablePercentRepository.findYearsAvailableByLocation(locationId);
     }
 }

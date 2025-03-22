@@ -30,7 +30,7 @@ public class SolarCapacityService {
         return  solarCapacityRepository.findTop10SolarCapacityByYear(year, pageable);
     }
 
-    public List<YearDataDTO> findYearsByLocationId(int year) {
-        return solarCapacityRepository.findYearsAvailableByLocation(year);
+    public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
+        return solarCapacityRepository.findYearsAvailableByLocation(locationId);
     }
 }

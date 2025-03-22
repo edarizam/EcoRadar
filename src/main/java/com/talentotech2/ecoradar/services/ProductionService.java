@@ -23,7 +23,7 @@ public class ProductionService {
         return productionRepository.findTop10ProductionByYear(year, pageable);
     }
 
-    public List<YearDataDTO> findYearsByLocationId(int year) {
-        return productionRepository.findYearsAvailableByLocation(year);
+    public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
+        return productionRepository.findYearsAvailableByLocation(locationId);
     }
 }
