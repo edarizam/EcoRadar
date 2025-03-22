@@ -1,4 +1,4 @@
-package com.talentotech2.ecoradar.models;
+package com.talentotech2.ecoradar.model;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;

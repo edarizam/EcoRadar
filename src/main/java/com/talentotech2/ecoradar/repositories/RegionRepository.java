@@ -1,6 +1,6 @@
 package com.talentotech2.ecoradar.repositories;
 
-import com.talentotech2.ecoradar.models.Region;
+import com.talentotech2.ecoradar.model.Region;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

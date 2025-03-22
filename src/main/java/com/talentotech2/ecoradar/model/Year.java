@@ -1,6 +1,7 @@
-package com.talentotech2.ecoradar.models;
+package com.talentotech2.ecoradar.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,23 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "location")
-public class Location {
+@Table(name = "year")
+public class Year {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "location_id")
+    @Column(name = "year_id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "code")
-    private String code;
-
-    @ManyToOne
-    @JoinColumn(name = "region_id")
-    private Region region;
+    @Column(name = "year")
+    private int year;
 
     @OneToMany(mappedBy = "id")
     private List<Consumption> consumptions;
@@ -40,4 +34,5 @@ public class Location {
 
     @OneToMany(mappedBy = "id")
     private List<RenewablePercent> renewablePercents;
+
 }

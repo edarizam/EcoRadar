@@ -1,13 +1,15 @@
 package com.talentotech2.ecoradar.controllers;
 
 import com.talentotech2.ecoradar.dto.DefaultDataDTO;
-import com.talentotech2.ecoradar.models.Consumption;
 import com.talentotech2.ecoradar.services.ConsumptionServices;
+import com.talentotech2.ecoradar.util.DefaultPageable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,23 +28,20 @@ public class ConsumptionController {
         return consumptionServices.findConsumptionByLocationAndYearsRange(locationId, startYear, endYear);
     }
 
-    @GetMapping("/hranking/{year}")
-    public List<DefaultDataDTO> findTop10HydroConsumptionsByYear(@PathVariable int year) {
-        return consumptionServices.findTop10HydroConsumptionsByYear(year);
+    @GetMapping("/{source}/ranking/{year}")
+    public List<DefaultDataDTO> findTop10ConsumptionsByYear(@PathVariable int year, @PathVariable String source) {
+        DefaultPageable pageable = getPageableBySource(source);
+        return consumptionServices.findTop10ConsumptionByYearAndSource(year, pageable.getPageable());
     }
 
-    @GetMapping("/wranking/{year}")
-    public List<DefaultDataDTO> findTop10WindConsumptionsByYear(@PathVariable int year) {
-        return consumptionServices.findTop10WindConsumptionsByYear(year);
+    private DefaultPageable getPageableBySource(String source) {
+        return switch (source.toLowerCase()) {
+            case "hydro" -> DefaultPageable.TOP_10_HYDRO;
+            case "wind" -> DefaultPageable.TOP_10_WIND;
+            case "solar" -> DefaultPageable.TOP_10_SOLAR;
+            case "bio" -> DefaultPageable.TOP_10_BIO_AND_OTHER;
+            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de fuente no válida");
+        };
     }
 
-    @GetMapping("/sranking/{year}")
-    public List<DefaultDataDTO> findTop10SolarConsumptionsByYear(@PathVariable int year) {
-        return consumptionServices.findTop10SolarConsumptionsByYear(year);
-    }
-
-    @GetMapping("/branking/{year}")
-    public List<DefaultDataDTO> findTop10BioAndOtherConsumptionsByYear(@PathVariable int year) {
-        return consumptionServices.findTop10BioAndOtherConsumptionsByYear(year);
-    }
 }

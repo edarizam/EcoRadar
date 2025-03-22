@@ -1,8 +1,7 @@
 package com.talentotech2.ecoradar.repositories;
 
 import com.talentotech2.ecoradar.dto.LocationDataDTO;
-import com.talentotech2.ecoradar.models.Location;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.talentotech2.ecoradar.model.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

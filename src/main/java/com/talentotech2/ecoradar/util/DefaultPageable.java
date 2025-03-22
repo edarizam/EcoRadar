@@ -1,9 +1,11 @@
-package com.talentotech2.ecoradar.utils;
+package com.talentotech2.ecoradar.util;
 
+import lombok.Getter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+@Getter
 public enum DefaultPageable {
     TOP_10_WIND(PageRequest.of(0, 10, Sort.by("windData").descending())),
     TOP_10_SOLAR(PageRequest.of(0, 10, Sort.by("solarData").descending())),
@@ -16,7 +18,4 @@ public enum DefaultPageable {
         this.pageable = pageable;
     }
 
-    public Pageable getPageable() {
-        return pageable;
-    }
 }

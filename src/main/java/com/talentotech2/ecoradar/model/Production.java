@@ -1,4 +1,4 @@
-package com.talentotech2.ecoradar.models;
+package com.talentotech2.ecoradar.model;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -10,16 +10,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "renewable_percent")
-public class RenewablePercent {
-
+@Table(name = "renewable_energy_production")
+public class Production {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "renewable_percent_id")
+    @Column(name = "production_id")
     private Integer id;
 
-    @Column(name = "percent")
-    private double renewablePercent;
+    @Column(name = "bioenergy_TWh")
+    private double bioAndOtherData;
+
+    @Column(name = "solar_TWh")
+    private double solarData;
+
+    @Column(name = "wind_TWh")
+    private double windData;
+
+    @Column(name = "hydro_TWh")
+    private double hydroData;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
@@ -28,5 +36,4 @@ public class RenewablePercent {
     @ManyToOne
     @JoinColumn(name = "year_id")
     private Year year;
-
 }

@@ -1,13 +1,11 @@
 package com.talentotech2.ecoradar.services;
 
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
-import com.talentotech2.ecoradar.models.RenewablePercent;
 import com.talentotech2.ecoradar.repositories.RenewablePercentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

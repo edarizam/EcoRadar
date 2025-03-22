@@ -2,11 +2,14 @@ package com.talentotech2.ecoradar.controllers;
 
 import com.talentotech2.ecoradar.dto.DefaultDataDTO;
 import com.talentotech2.ecoradar.services.ProductionService;
+import com.talentotech2.ecoradar.util.DefaultPageable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,25 +28,24 @@ public class ProductionController {
         return productionService.findProductionByLocationAndYearsRange(locationId, startYear, endYear);
     }
 
-    @GetMapping("/wranking/{year}")
-    public List<DefaultDataDTO> findTop10WindProductionByYear(@PathVariable int year) {
-        return productionService.findTop10WindProductionByYear(year);
+    @GetMapping("/{source}/ranking/{year}")
+    public List<DefaultDataDTO> findTop10ProductionsByYear(
+            @PathVariable int year, @PathVariable String source) {
+
+        DefaultPageable pageable = getPageableBySource(source);
+        return productionService.findTop10ProductionByYearAndSource(year, pageable.getPageable());
     }
 
-    @GetMapping("/hranking/{year}")
-    public List<DefaultDataDTO> findTop10HydroProductionByYear(@PathVariable int year) {
-        return productionService.findTop10HydroProductionByYear(year);
+    private DefaultPageable getPageableBySource(String source) {
+        return switch (source.toLowerCase()) {
+            case "hydro" -> DefaultPageable.TOP_10_HYDRO;
+            case "wind" -> DefaultPageable.TOP_10_WIND;
+            case "solar" -> DefaultPageable.TOP_10_SOLAR;
+            case "bio" -> DefaultPageable.TOP_10_BIO_AND_OTHER;
+            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de fuente no válida");
+        };
     }
 
-    @GetMapping("/sranking/{year}")
-    public List<DefaultDataDTO> findTop10SolarProductionByYear(@PathVariable int year) {
-        return productionService.findTop10SolarProductionByYear(year);
-    }
-
-    @GetMapping("/branking/{year}")
-    public List<DefaultDataDTO> findTop10BioAndOtherProductionByYear(@PathVariable int year) {
-        return productionService.findTop10BioAndOtherProductionByYear(year);
-    }
 
 
 }

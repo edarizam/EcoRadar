@@ -1,6 +1,6 @@
 package com.talentotech2.ecoradar.controllers;
 
-import com.talentotech2.ecoradar.models.Region;
+import com.talentotech2.ecoradar.model.Region;
 import com.talentotech2.ecoradar.services.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

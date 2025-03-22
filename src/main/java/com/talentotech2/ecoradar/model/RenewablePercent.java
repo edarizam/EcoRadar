@@ -1,4 +1,4 @@
-package com.talentotech2.ecoradar.models;
+package com.talentotech2.ecoradar.model;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -10,16 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "solar_capacity")
-public class SolarCapacity {
+@Table(name = "renewable_percent")
+public class RenewablePercent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "solar_capacity_id")
+    @Column(name = "renewable_percent_id")
     private Integer id;
 
     @Column(name = "percent")
-    private double percent;
+    private double renewablePercent;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
