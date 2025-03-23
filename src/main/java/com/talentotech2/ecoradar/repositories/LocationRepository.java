@@ -16,4 +16,9 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
             "l.id, l.name) " +
             "FROM Location l WHERE l.region.id = :regionId")
     List<LocationDataDTO> findLocationsByRegionId(@Param("regionId") Integer regionId);
+
+    @Query("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+            "l.id, l.name) " +
+            "FROM Location l")
+    List<LocationDataDTO> findAllLocations();
 }

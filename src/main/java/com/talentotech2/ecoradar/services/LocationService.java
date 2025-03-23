@@ -16,4 +16,8 @@ public class LocationService {
     public List<LocationDataDTO> findLocationsByRegionId(Integer regionId) {
         return locationRepository.findLocationsByRegionId(regionId);
     }
+
+    public List<LocationDataDTO> findAllLocations() {
+        return locationRepository.findAllLocations();
+    }
 }
