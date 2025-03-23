@@ -13,6 +13,10 @@ const selectFirstLocation = document.getElementById("countrySelect");
 const selectSecondLocation = document.getElementById("countrySelect1");
 const locationsSelect = [selectFirstLocation, selectSecondLocation];
 
+const selectFirstOnlyLocation = document.getElementById("countries");
+const selectSecondOnlyLocation = document.getElementById("countries1");
+const onlyLocationsSelect = [selectFirstOnlyLocation, selectSecondOnlyLocation];
+
 const firstCountryDiv = document.getElementById("firstCountry");
 const secondCountryDiv = document.getElementById("secondCountry");
 const firstCountryByRegionDiv = document.getElementById("firstCountryByRegion");
@@ -32,11 +36,16 @@ document.addEventListener("DOMContentLoaded", function () {
   selectStudyOption.addEventListener("change", toggleEnergyType);
 
   //Evento Year Start
-  selectYearStart.addEventListener("change", updateYearEnd);
+  yearStart.addEventListener("change", updateYearEnd);
 
   // Eventos de selección de país
   selectFirstRegion.addEventListener("change", function (e) {
     updateCountrySelect(e, selectFirstLocation);
+
+    selectSecondLocation.disabled = true;
+    selectSecondLocation.selectedIndex = 0;
+    selectSecondRegion.disabled = true;
+    selectSecondRegion.selectedIndex = 0;
   });
   selectSecondRegion.addEventListener("change", function (e) {
     updateCountrySelect(e, selectSecondLocation);
@@ -63,15 +72,29 @@ document.addEventListener("DOMContentLoaded", function () {
   // Evento de seleccionar tipo de búsqueda
   searchType.addEventListener("change", function () {
     if (this.value === "country") {
-      locationsSelect.forEach((select) => {
-        select.disabled = false;
-        //populateCountries(select);
-      });
-      regionsSelect.forEach((select) => (select.disabled = true));
+      selectFirstOnlyLocation.disabled = false;
+      selectSecondOnlyLocation.disabled = true;
+      selectSecondOnlyLocation.innerHTML =
+        "<option value='0'>Selecciona un país</option>";
+      selectFirstOnlyLocation.innerHTML =
+        "<option value='0'>Selecciona un país</option>";
+      populateCountries(selectFirstOnlyLocation);
+
       firstCountryDiv.style.display = "flex";
       secondCountryDiv.style.display = "flex";
       firstCountryByRegionDiv.style.display = "none";
       secondCountryByRegionDiv.style.display = "none";
+      // Reiniciar el estado y la información que muestran
+      locationsSelect.forEach((select) => {
+        select.disabled = true;
+        select.innerHTML = "<option value='0'>Selecciona un país</option>";
+      });
+      regionsSelect.forEach((select) => {
+        select.disabled = true;
+        select.selectedIndex = 0;
+      });
+      selectFirstRegion.disabled = false;
+      selectSecondRegion.disabled = true;
     } else if (this.value === "continent") {
       locationsSelect.forEach((select) => (select.disabled = true));
       regionsSelect.forEach((select) => (select.disabled = false));
@@ -79,10 +102,30 @@ document.addEventListener("DOMContentLoaded", function () {
       secondCountryDiv.style.display = "none";
       firstCountryByRegionDiv.style.display = "flex";
       secondCountryByRegionDiv.style.display = "flex";
+      // Reiniciar el estado y la información que muestran
+      locationsSelect.forEach((select) => {
+        select.disabled = true;
+        select.innerHTML = "<option value='0'>Selecciona un país</option>";
+      });
+      regionsSelect.forEach((select) => {
+        select.disabled = true;
+        select.selectedIndex = 0;
+      });
+      selectFirstRegion.disabled = false;
+      selectSecondRegion.disabled = true;
     } else {
       locationsSelect.forEach((select) => (select.disabled = true));
       regionsSelect.forEach((select) => (select.disabled = true));
+      onlyLocationsSelect.forEach((select) => (select.disabled = true));
     }
+  });
+
+  // Evento para actualizar la segunda only location
+  selectFirstLocation.addEventListener("change", () => {
+    selectSecondRegion.selectedIndex = 0;
+    selectSecondRegion.disabled = false;
+    selectSecondLocation.disabled = true;
+    selectSecondLocation.selectedIndex = 0;
   });
 
   /* ######################################### Fin estructura con API ################################## */
@@ -96,21 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
   fillRegions();
   //inicializarGrafica();
 });
-
-// ✅ Actualizar los años finales según la selección de año inicial
-function updateYearEnd() {
-  let startYear = parseInt(document.getElementById("yearStart").value);
-  let yearEndSelect = document.getElementById("yearEnd");
-
-  yearEndSelect.innerHTML = '<option value="">Selecciona un año</option>';
-
-  if (!isNaN(startYear)) {
-    for (let year = startYear; year <= 2022; year++) {
-      let option = new Option(year, year);
-      yearEndSelect.appendChild(option);
-    }
-  }
-}
 
 // ✅ Mostrar u ocultar "Tipo de Energía" según la opción seleccionada
 function toggleEnergyType() {
@@ -156,9 +184,9 @@ async function getData(url) {
 // Obtener Regions y rellenar select's
 async function fillRegions() {
   selectFirstRegion.innerHTML =
-    "<option value=0>Selecciona una región</option>";
+    "<option value='0'>Selecciona una región</option>";
   selectSecondRegion.innerHTML =
-    "<option value=0>Selecciona una región</option>";
+    "<option value='0'>Selecciona una región</option>";
 
   const data = await getData("http://localhost:8080/region");
   if (data) {
@@ -185,8 +213,8 @@ async function updateCountrySelect(event, locationSelect) {
     `http://localhost:8080/location/region/${regionId}`
   );
 
-  locationSelect.innerHTML = "<option value=0> Selecciona un país </option>";
-  if (regionId !== 0 && locationsByRegion[regionId]) {
+  locationSelect.innerHTML = "<option value='0'> Selecciona un país </option>";
+  if (regionId !== "0" && locationsByRegion) {
     locationsByRegion.forEach((location) => {
       let option = document.createElement("option");
       option.value = location.id;
@@ -198,19 +226,40 @@ async function updateCountrySelect(event, locationSelect) {
       } else locationSelect.appendChild(option);
     });
     locationSelect.disabled = false;
+  } else {
+    locationSelect.disabled = true;
   }
 }
 
-function populateCountries(selectElement) {
+async function populateCountries(selectElement) {
   selectElement.innerHTML =
     "<option id='' value=''>Selecciona un país</option>";
   //Definir countries mediante la API
-  countries.forEach((country) => {
-    let option = document.createElement("option");
-    option.value = country;
-    option.textContent = country;
-    selectElement.appendChild(option);
-  });
+  const countries = await getData("http://localhost:8080/location");
+  if (countries) {
+    countries.forEach((country) => {
+      let option = document.createElement("option");
+      option.value = country.id;
+      option.textContent = country.name;
+      if (selectFirstOnlyLocation.value == option.value) {
+      } else selectElement.appendChild(option);
+    });
+  }
+}
+
+// ✅ Actualizar los años finales según la selección de año inicial
+function updateYearEnd() {
+  let startYear = parseInt(document.getElementById("yearStart").value);
+  let yearEndSelect = document.getElementById("yearEnd");
+
+  yearEndSelect.innerHTML = '<option value="">Selecciona un año</option>';
+
+  if (!isNaN(startYear)) {
+    for (let year = startYear; year <= 2022; year++) {
+      let option = new Option(year, year);
+      yearEndSelect.appendChild(option);
+    }
+  }
 }
 
 // ✅ Generar los años en los select
