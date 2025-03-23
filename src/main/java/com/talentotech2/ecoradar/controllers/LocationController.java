@@ -21,4 +21,9 @@ public class LocationController {
     public List<LocationDataDTO> findLocationsByRegionId(@PathVariable Integer regionId) {
         return locationService.findLocationsByRegionId(regionId);
     }
+
+    @GetMapping
+    public List<LocationDataDTO> findAllLocations() {
+        return locationService.findAllLocations();
+    }
 }
