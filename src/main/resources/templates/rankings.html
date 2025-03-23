@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Energético</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* 📌 Ajuste de la tabla para ser más responsiva */
+        .table-container {
+            max-height: 430px;
+            overflow-y: auto;
+        }
+
+        /* 📌 Permitir que el gráfico se ajuste al contenedor */
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 300px; /* 📌 Garantiza un tamaño mínimo */
+        }
+
+        /* 📌 Mejor ajuste en pantallas pequeñas */
+        @media (max-width: 768px) {
+            .table-container {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 class="text-center">RANKINGS</h1>
+    <p class="text-center text-muted">
+        En esta página puedes explorar el ranking de diferentes tipos de energías:
+        <strong>Eólica, Hidráulica, Solar y Biomasa</strong>. Podrás
+        elegir si quieres ver el <strong>consumo</strong> o la <strong>producción</strong> según el
+        tipo de energía en un año específico
+        y ordenar la lista países de <strong>mayor a menor</strong> o viceversa.
+        Para visualizar los datos, llena los campos y presiona <strong>Enter</strong>.
+        En el gráfico de torta podrás ver el <strong>top 10 de países</strong> según la información seleccionada y en la tabla podrás ver la lista completa.
+    </p>
+    <!-- Gráficos y tablas energias -->
+    <main>
+        <div class="container mt-4">
+            <div class="row" id="energias-container"></div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const energias = ["Eólica", "Hidráulica", "Solar", "Biomasa"];
+                const container = document.getElementById("energias-container");
+
+                energias.forEach(energia => {
+                    container.innerHTML += `
+<div class="container">
+    <div class="row justify-content-center text-center mb-3">
+        <div class="col-md-12 bg-light py-2 rounded">
+            <h3 class="mb-0">${energia}</h3>
+        </div>
+        <div class="col-md-10 d-flex justify-content-center flex-wrap gap-2">
+            <select class="form-select form-select-sm tipoEnergia" data-energia="${energia}" style="max-width: 200px;">
+                <option selected disabled>Seleccione el indicador energético</option>
+                <option value="consumo">Consumo</option>
+                <option value="produccion">Producción</option>
+            </select>
+            <select class="form-control form-control-sm anioEnergia" data-energia="${energia}" style="max-width: 120px;">
+                <option value="" disabled selected>Año</option>
+            </select>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">Ordenar</button>
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item ordenar" data-energia="${energia}" data-orden="desc">Mayor a menor</button></li>
+                    <li><button class="dropdown-item ordenar" data-energia="${energia}" data-orden="asc">Menor a mayor</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center align-items-center position-relative">
+        <div class="col-md-5 mx-2">
+            <div class="text-center">
+                <h5 class="chart-title my-3" id="chartTitle-${energia}" style="display: none;"></h5>
+            </div>
+            <div class="chart-wrapper position-relative d-flex align-items-center justify-content-center" style="min-height: 300px;">
+                <canvas id="chart${energia}" class="chart-placeholder"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-5 mx-2">
+            <div class="text-center">
+                <h5 class="table-title my-3" id="tableTitle-${energia}" style="display: none;"></h5>
+            </div>
+            <div class="table-responsive table-container">
+                <table class="table table-striped table-hover table-bordered text-center align-middle" id="energyTable-${energia}" style="display: none;">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>PAÍS</th>
+                            <th id="columna-${energia}">VALOR</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Mensaje Placeholder Centrado -->
+        <div class="placeholder-message position-absolute text-center" id="placeholder-${energia}" style="color: #b0b0b0;">
+            <p class="fs-4">Por favor, llena los datos para visualizar el gráfico y la tabla.</p>
+            <p class="fs-1">🔍</p>
+        </div>
+    </div>
+</div>
+            `;
+                });
+
+                let charts = {};
+
+                document.querySelectorAll(".tipoEnergia, .anioEnergia").forEach(element => {
+                    element.addEventListener("change", () => actualizarDatos(element.dataset.energia));
+                });
+
+                document.querySelectorAll(".ordenar").forEach(button => {
+                    button.addEventListener("click", function () {
+                        actualizarDatos(this.dataset.energia, this.dataset.orden);
+                    });
+                });
+
+                function obtenerDatosSimulados(energia, tipo, anio, orden) {
+                    return new Promise(resolve => {
+                        setTimeout(() => {
+                            let datos = ["Brasil", "Argentina", "Chile", "México", "Colombia", "Perú", "Ecuador", "Venezuela", "Uruguay", "Paraguay", "Bolivia"].map(pais => ({
+                                pais,
+                                consumo: Math.random() * 100,
+                                produccion: Math.random() * 100
+                            }));
+
+                            datos.sort((a, b) => orden === "desc" ? b[tipo] - a[tipo] : a[tipo] - b[tipo]);
+                            resolve(datos);
+                        }, 500);
+                    });
+                }
+
+                function actualizarDatos(energia, orden = "desc") {
+                    const tipoElement = document.querySelector(`.tipoEnergia[data-energia='${energia}']`);
+                    const anioElement = document.querySelector(`.anioEnergia[data-energia='${energia}']`);
+                    if (!tipoElement || !anioElement) return;
+
+                    const tipo = tipoElement.value;
+                    const anio = anioElement.value;
+                    if (!tipo || !anio) return;
+
+                    obtenerDatosSimulados(energia, tipo, anio, orden).then(data => {
+                        actualizarGrafico(energia, data.slice(0, 10), tipo);
+                        actualizarTabla(energia, data, tipo);
+                        actualizarTitulos(energia, tipo, anio, orden);
+                        manejarPlaceholder(energia, true);
+                    });
+                }
+
+                function actualizarGrafico(energia, data, tipo) {
+                    const ctx = document.getElementById(`chart${energia}`).getContext("2d");
+                    if (!ctx) return;
+
+                    const labels = data.map(d => d.pais);
+                    const valores = data.map(d => d[tipo]);
+
+                    if (charts[energia]) {
+                        charts[energia].destroy();
+                    }
+
+                    charts[energia] = new Chart(ctx, {
+                        type: "doughnut",
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: tipo.charAt(0).toUpperCase() + tipo.slice(1),
+                                data: valores
+                            }]
+                        }
+                    });
+                }
+
+                function actualizarTabla(energia, data, tipo) {
+                    const table = document.getElementById(`energyTable-${energia}`);
+                    const tbody = table.querySelector("tbody");
+
+                    if (!tbody) return;
+
+                    if (data.length === 0) {
+                        table.style.display = "none";
+                        return;
+                    }
+
+                    tbody.innerHTML = data.map((d, index) => `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${d.pais}</td>
+                <td>${d[tipo].toFixed(2)}</td>
+            </tr>
+            `).join('');
+
+                    table.style.display = "table";
+                }
+
+                function actualizarTitulos(energia, tipo, anio, orden) {
+                    const chartTitle = document.getElementById(`chartTitle-${energia}`);
+                    const tableTitle = document.getElementById(`tableTitle-${energia}`);
+
+                    chartTitle.innerText = `Top 10 países con ${tipo} de energía ${energia} en ${anio}`;
+                    chartTitle.style.display = "block";
+
+                    tableTitle.innerText = `Lista completa de países con ${tipo} de energía ${energia} en ${anio}`;
+                    tableTitle.style.display = "block";
+                }
+
+                function manejarPlaceholder(energia, mostrar) {
+                    const placeholder = document.getElementById(`placeholder-${energia}`);
+                    placeholder.style.display = mostrar ? "none" : "block";
+                }
+
+                document.querySelectorAll(".anioEnergia").forEach(select => {
+                    for (let year = 1965; year <= 2022; year++) {
+                        let option = document.createElement("option");
+                        option.value = year;
+                        option.textContent = year;
+                        select.appendChild(option);
+                    }
+                });
+            });
+        </script>
+
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
