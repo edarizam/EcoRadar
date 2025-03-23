@@ -2,12 +2,8 @@ package com.talentotech2.ecoradar.controllers;
 
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
-import com.talentotech2.ecoradar.repositories.SolarCapacityRepository;
 import com.talentotech2.ecoradar.services.SolarCapacityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
