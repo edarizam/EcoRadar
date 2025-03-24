@@ -50,6 +50,20 @@ const defaultValues = {
   yearEnd: "Selecciona un año",
 };
 
+const defaultTitlesStudyOptions = {
+  renewable: "Energía Renovable",
+  solar: "Energía Solar",
+  consumption: "Consumo",
+  production: "Producción",
+};
+
+const defaultTitlesEnergyTypes = {
+  hydro: "Energía Hidroeléctrica",
+  solar: "Energía Solar",
+  wind: "Energía Eólica",
+  bio: "Bioenergía y Otras Renovables",
+};
+
 let yearsGetted = {};
 let queryResult1 = {};
 let queryResult2 = {};
@@ -88,6 +102,7 @@ function updateSearchTypeUI() {
     secondCountryDiv.style.display = "flex";
     firstCountryByRegionDiv.style.display = "none";
     secondCountryByRegionDiv.style.display = "none";
+    hideElements(divYearStart, divYearEnd);
 
     locationsSelect.forEach((reset) =>
       resetSelect(reset, "Selecciona un país")
@@ -111,6 +126,7 @@ function updateSearchTypeUI() {
     secondCountryDiv.style.display = "none";
     firstCountryByRegionDiv.style.display = "flex";
     secondCountryByRegionDiv.style.display = "flex";
+    hideElements(divYearStart, divYearEnd);
 
     // Asegurarse de que solo el primero esté habilitado inicialmente
     selectFirstRegion.disabled = false;
@@ -158,6 +174,15 @@ function actualizarTitulo() {
     selectStudyOption.value || "Completa el formulario";
 }
 
+function updateTitle(infoType, energyType) {
+  const infoTitle = defaultTitlesStudyOptions[infoType] || "";
+  const energyTitle = defaultTitlesEnergyTypes[energyType] || "";
+
+  dynamicHeading.textContent = energyTitle
+    ? `${infoTitle} - ${energyTitle}`
+    : `${infoTitle}`;
+}
+
 // Función genérica para obtener datos de la API
 async function getData(url) {
   try {
@@ -193,11 +218,12 @@ async function fillRegions() {
 // Actualiza el select de países según la región seleccionada
 async function updateCountrySelect(event, locationSelect) {
   const regionId = event.target.value;
+  const studyInfo = studyOption.value;
   resetSelect(locationSelect, "Selecciona un país");
 
-  if (regionId) {
+  if (regionId && studyInfo) {
     const locationsByRegion = await getData(
-      `http://localhost:8080/location/region/${regionId}`
+      `http://localhost:8080/${studyInfo}/location/${regionId}`
     );
     if (locationsByRegion) {
       locationsByRegion.forEach((location) => {
@@ -219,7 +245,12 @@ async function updateCountrySelect(event, locationSelect) {
 // Rellena el select de países para búsqueda por país
 async function populateCountries(selectElement) {
   resetSelect(selectElement, "Selecciona un país");
-  const countries = await getData("http://localhost:8080/location");
+  let countries = false;
+  const studyInfo = studyOption.value;
+
+  if (studyInfo) {
+    countries = await getData(`http://localhost:8080/${studyInfo}/location`);
+  }
   if (countries) {
     countries.forEach((country) => {
       if (selectFirstOnlyLocation.value !== country.id) {
@@ -282,7 +313,7 @@ async function enviarFormulario() {
   queryResult2 = {};
 
   if (infoType && firstLocation && startYear && endYear) {
-    dynamicHeading.textContent = `${infoType} - ${energyType}`;
+    updateTitle(infoType, energyType);
     let url = `http://localhost:8080/${infoType}/compare/${firstLocation}/${startYear}/${endYear}`;
     queryResult1 = await getData(url);
     console.log(queryResult1);
