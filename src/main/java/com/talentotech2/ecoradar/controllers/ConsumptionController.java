@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.controllers;
 
 import com.talentotech2.ecoradar.dto.DefaultDataDTO;
+import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.services.ConsumptionServices;
 import com.talentotech2.ecoradar.util.DefaultPageable;
@@ -18,6 +19,11 @@ public class ConsumptionController {
 
     @Autowired
     private ConsumptionServices consumptionServices;
+
+    @GetMapping("/location")
+    List<LocationDataDTO> findLocationsAvailable() {
+        return consumptionServices.findLocationsAvailable();
+    }
 
     @GetMapping("/compare/{locationId}/{startYear}/{endYear}")
     public List<DefaultDataDTO> findConsumptionByLocationAndYearsRange(

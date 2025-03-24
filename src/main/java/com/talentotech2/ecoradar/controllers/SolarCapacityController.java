@@ -1,5 +1,6 @@
 package com.talentotech2.ecoradar.controllers;
 
+import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.services.SolarCapacityService;
@@ -31,6 +32,11 @@ public class SolarCapacityController {
 
     @GetMapping("/ranking/best/{year}")
     List<PercentageDataDTO> findTop10SolarCapacityByYear(@PathVariable int year) {
-        return  solarCapacityService.findTop10SolarCapacityByYear(year);
+        return solarCapacityService.findTop10SolarCapacityByYear(year);
+    }
+
+    @GetMapping("/location")
+    List<LocationDataDTO> findLocationsAvailable() {
+        return solarCapacityService.findLocationsAvailable();
     }
 }

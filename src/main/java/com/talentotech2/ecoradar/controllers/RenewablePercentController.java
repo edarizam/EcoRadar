@@ -1,5 +1,6 @@
 package com.talentotech2.ecoradar.controllers;
 
+import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.services.RenewablePercentService;
@@ -32,6 +33,11 @@ public class RenewablePercentController {
     @GetMapping("/ranking/best/{year}")
     List<PercentageDataDTO> findTop10RenewablePercent(@PathVariable int year) {
         return renewablePercentService.findTop10RenewablePercent(year);
+    }
+
+    @GetMapping("/location")
+    List<LocationDataDTO> findLocationsAvailable() {
+        return renewablePercentService.findLocationsAvailable();
     }
 
 }
