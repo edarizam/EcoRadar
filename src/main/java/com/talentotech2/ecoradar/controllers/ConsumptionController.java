@@ -43,6 +43,11 @@ public class ConsumptionController {
         return consumptionServices.findYearsByLocationId(locationId);
     }
 
+    @GetMapping("/year")
+    public List<Integer> findYearsAvailableToRank() {
+        return consumptionServices.findYearsAvailableToRank();
+    }
+
     @GetMapping("/{source}/ranking/{year}")
     public List<DefaultDataDTO> findTop10ConsumptionsByYear(@PathVariable int year, @PathVariable String source) {
         DefaultPageable pageable = getPageableBySource(source);

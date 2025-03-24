@@ -43,6 +43,11 @@ public class ProductionController {
         return productionService.findYearsByLocationId(locationId);
     }
 
+    @GetMapping("/year")
+    public List<Integer> findYearsAvailableToRank() {
+        return productionService.findYearsAvailableToRank();
+    }
+
     @GetMapping("/{source}/ranking/{year}")
     public List<DefaultDataDTO> findTop10ProductionsByYear(
             @PathVariable int year, @PathVariable String source) {

@@ -30,6 +30,11 @@ public class SolarCapacityController {
         return solarCapacityService.findYearsByLocationId(locationId);
     }
 
+    @GetMapping("/year")
+    public List<Integer> findYearsAvailableToRank() {
+        return solarCapacityService.findYearsAvailableToRank();
+    }
+
     @GetMapping("/ranking/best/{year}")
     List<PercentageDataDTO> findTop10SolarCapacityByYear(@PathVariable int year) {
         return solarCapacityService.findTop10SolarCapacityByYear(year);

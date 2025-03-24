@@ -30,6 +30,11 @@ public class RenewablePercentController {
         return renewablePercentService.findYearsByLocationId(locationId);
     }
 
+    @GetMapping("/year")
+    public List<Integer> findYearsAvailableToRank() {
+        return renewablePercentService.findYearsAvailableToRank();
+    }
+
     @GetMapping("/ranking/best/{year}")
     List<PercentageDataDTO> findTop10RenewablePercent(@PathVariable int year) {
         return renewablePercentService.findTop10RenewablePercent(year);
