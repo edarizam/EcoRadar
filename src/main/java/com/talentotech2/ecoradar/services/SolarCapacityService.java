@@ -1,5 +1,6 @@
 package com.talentotech2.ecoradar.services;
 
+import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.repositories.SolarCapacityRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,4 +35,13 @@ public class SolarCapacityService {
     public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
         return solarCapacityRepository.findYearsAvailableByLocation(locationId);
     }
+
+    public List<LocationDataDTO> findLocationsAvailable() {
+        return solarCapacityRepository.findLocationsAvailable();
+    }
+
+    public List<LocationDataDTO> findLocationsAvailableByRegion(Integer regionId) {
+        return solarCapacityRepository.findLocationsAvailableByRegion(regionId);
+    }
+
 }
