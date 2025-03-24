@@ -32,8 +32,8 @@ public class ConsumptionServices {
         return new ArrayList<>(consumptionRepository.findLocationsAvailable());
     }
 
-    public List<LocationDataDTO> findLocationsAvailableByRegionId() {
-        return new ArrayList<>(consumptionRepository.findLocationsAvailable());
+    public List<LocationDataDTO> findLocationsAvailableByRegionId(Integer regionId) {
+        return new ArrayList<>(consumptionRepository.findLocationsAvailableByRegion(regionId));
     }
 
 }

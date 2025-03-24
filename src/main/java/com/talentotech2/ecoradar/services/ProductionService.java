@@ -34,7 +34,7 @@ public class ProductionService {
     }
 
     public List<LocationDataDTO> findLocationsAvailableByRegion(Integer regionId) {
-        return new ArrayList<>(productionRepository.findLocationsAvailable());
+        return new ArrayList<>(productionRepository.findLocationsAvailableByRegion(regionId));
     }
 
 }

@@ -25,6 +25,11 @@ public class ProductionController {
         return productionService.findLocationsAvailable();
     }
 
+    @GetMapping("/location/{regionId}")
+    List<LocationDataDTO> findLocationsAvailableByRegion(@PathVariable Integer regionId) {
+        return productionService.findLocationsAvailableByRegion(regionId);
+    }
+
     @GetMapping("/compare/{locationId}/{startYear}/{endYear}")
     public List<DefaultDataDTO> findProductionByLocationAndYearsRange(
             @PathVariable Integer locationId,

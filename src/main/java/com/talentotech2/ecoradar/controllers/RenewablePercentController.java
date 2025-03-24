@@ -40,4 +40,9 @@ public class RenewablePercentController {
         return renewablePercentService.findLocationsAvailable();
     }
 
+    @GetMapping("/location/{regionId}")
+    List<LocationDataDTO> findLocationsAvailableByRegion(@PathVariable Integer regionId) {
+        return renewablePercentService.findLocationsAvailableByRegion(regionId);
+    }
+
 }

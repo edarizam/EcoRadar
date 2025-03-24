@@ -39,4 +39,9 @@ public class SolarCapacityController {
     List<LocationDataDTO> findLocationsAvailable() {
         return solarCapacityService.findLocationsAvailable();
     }
+
+    @GetMapping("/location/{regionId}")
+    List<LocationDataDTO> findLocationsAvailableByRegion(@PathVariable Integer regionId) {
+        return solarCapacityService.findLocationsAvailableByRegion(regionId);
+    }
 }

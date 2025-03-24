@@ -25,6 +25,11 @@ public class ConsumptionController {
         return consumptionServices.findLocationsAvailable();
     }
 
+    @GetMapping("/location/{regionId}")
+    List<LocationDataDTO> findLocationsAvailableByRegion(@PathVariable Integer regionId) {
+        return consumptionServices.findLocationsAvailableByRegionId(regionId);
+    }
+
     @GetMapping("/compare/{locationId}/{startYear}/{endYear}")
     public List<DefaultDataDTO> findConsumptionByLocationAndYearsRange(
             @PathVariable Integer locationId,
