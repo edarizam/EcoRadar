@@ -18,12 +18,10 @@
         <label for="studyOption">Selecciona una opción:</label>
         <select id="studyOption">
           <option value="">Selecciona una opción</option>
-          <option value="Consumo">Consumo</option>
-          <option value="Producción">Producción</option>
-          <option value="Capacidad Solar">Capacidad Solar</option>
-          <option value="Energía Renovable">
-            Porcentaje de Energía Renovable
-          </option>
+          <option value="consumption">Consumo</option>
+          <option value="production">Producción</option>
+          <option value="solar">% Capacidad Solar Instalada</option>
+          <option value="renewable">% Energía Renovable</option>
         </select>
       </div>
 
@@ -33,10 +31,10 @@
         <label for="energyType">Selecciona un tipo de energía:</label>
         <select id="energyType">
           <option value="">Selecciona un tipo de energía</option>
-          <option value="Eólica">Eólica</option>
-          <option value="Hidráulica">Hidráulica</option>
-          <option value="Bioenergía">Biomasa</option>
-          <option value="Otras">Otras</option>
+          <option value="wind">Eólica</option>
+          <option value="hydro">Hidráulica</option>
+          <option value="solar">Solar</option>
+          <option value="bio">Bioenergía y otras</option>
         </select>
       </div>
 
@@ -51,61 +49,38 @@
         </select>
       </div>
 
-      <!-- 🌍 Selección de Región -->
-      <div class="container">
+      <!-- 🌍 Selección a partir de país -->
+      <div class="container" id="firstCountry">
         <h2>🌍 País</h2>
         <label for="countries"></label>
-        <select id="countries">
-          <option value="">Selecciona un país</option>
-        </select>
+        <select id="countries"></select>
       </div>
 
-      <!-- 🌍 Selección de Región -->
-      <div class="container">
+      <!-- 🌍 Selección de país adicional -->
+      <div class="container" id="secondCountry">
         <h2>🌍 País adicional</h2>
         <label for="countries"></label>
-        <select id="countries">
-          <option value="">Selecciona un país</option>
-        </select>
+        <select id="countries1"></select>
       </div>
 
-      <div class="container">
+      <!-- 🌍 Selección a partir de Región -->
+      <div class="container" id="firstCountryByRegion">
         <h2>🌍 Contienente</h2>
         <label for="continentSelect"></label>
-        <select id="continentSelect">
-          <option value="">Selecciona un continente</option>
-          <option value="africa">África</option>
-          <option value="north-america">América del Norte</option>
-          <option value="south-america">América del Sur</option>
-          <option value="asia">Asia</option>
-          <option value="europe">Europa</option>
-          <option value="oceania">Oceanía</option>
-        </select>
+        <select id="continentSelect"></select>
 
         <label for="countrySelect">País del continente:</label>
-        <select id="countrySelect" disabled>
-          <option value="">Selecciona un país</option>
-        </select>
+        <select id="countrySelect" disabled></select>
       </div>
 
       <!-- 🌍 Selección de Región Adicional -->
-      <div class="container">
+      <div class="container" id="secondCountryByRegion">
         <h2>🌍 Continente adicional</h2>
         <label for="continentSelect1"></label>
-        <select id="continentSelect1">
-          <option value="">Selecciona un continente</option>
-          <option value="africa">África</option>
-          <option value="north-america">América del Norte</option>
-          <option value="south-america">América del Sur</option>
-          <option value="asia">Asia</option>
-          <option value="europe">Europa</option>
-          <option value="oceania">Oceanía</option>
-        </select>
+        <select id="continentSelect1"></select>
 
         <label for="countrySelect1">País del continente:</label>
-        <select id="countrySelect1" disabled>
-          <option value="">Selecciona un país</option>
-        </select>
+        <select id="countrySelect1" disabled></select>
       </div>
 
       <!-- 📅 Año Inicial -->
