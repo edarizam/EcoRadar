@@ -1,3 +1,4 @@
+// Elementos del DOM
 const selectStudyOption = document.getElementById("studyOption");
 
 const divEnergyType = document.getElementById("energyContainer");
@@ -19,136 +20,91 @@ const onlyLocationsSelect = [selectFirstOnlyLocation, selectSecondOnlyLocation];
 
 const firstCountryDiv = document.getElementById("firstCountry");
 const secondCountryDiv = document.getElementById("secondCountry");
+
 const firstCountryByRegionDiv = document.getElementById("firstCountryByRegion");
 const secondCountryByRegionDiv = document.getElementById(
   "secondCountryByRegion"
 );
 
-let yearsGetted = {};
+const divYearStart = document.getElementById("divYearStart");
 const yearStart = document.getElementById("yearStart");
+
+const divYearEnd = document.getElementById("divYearEnd");
 const yearEnd = document.getElementById("yearEnd");
 
 const btnConsultar = document.getElementById("consultarBtn");
+/* const h1TitleStudio = document.querySelector("div h1"); */
+const dynamicHeading = document.getElementById("dynamicHeading");
+
+const myChart = document.getElementById("myChart");
+
+let yearsGetted = {};
 let queryResult1 = {};
 let queryResult2 = {};
 
-const h1TitleStudio = document.querySelector("div h1");
-const myChart = document.getElementById("myChart");
+/* ########################## Funciones Auxiliares ########################### */
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Evento StudyOption
-  selectStudyOption.addEventListener("change", toggleEnergyType);
+// Resetea un select con una opción por defecto
+const resetSelect = (selectElement, defaultOption, letEmpty = true) => {
+  if (letEmpty)
+    selectElement.innerHTML = `<option value="">${defaultOption}</option>`;
+  selectElement.disabled = true;
+  selectElement.selectedIndex = 0;
+};
 
-  //Evento Year Start
-  yearStart.addEventListener("change", updateYearEnd);
+// Actualiza el estado de la UI en función del tipo de búsqueda
+function updateSearchTypeUI() {
+  if (searchType.value === "country") {
+    // Habilitar búsqueda por país
+    selectFirstOnlyLocation.disabled = false;
+    resetSelect(selectSecondOnlyLocation, "Selecciona un país");
+    populateCountries(selectFirstOnlyLocation);
 
-  // Eventos de selección de país
-  selectFirstRegion.addEventListener("change", function (e) {
-    updateCountrySelect(e, selectFirstLocation);
+    firstCountryDiv.style.display = "flex";
+    secondCountryDiv.style.display = "flex";
+    firstCountryByRegionDiv.style.display = "none";
+    secondCountryByRegionDiv.style.display = "none";
 
-    selectSecondLocation.disabled = true;
-    selectSecondLocation.selectedIndex = 0;
+    locationsSelect.forEach((reset) =>
+      resetSelect(reset, "Selecciona un país")
+    );
+    regionsSelect.forEach((select) => {
+      select.disabled = true;
+      select.selectedIndex = 0;
+    });
+    selectFirstRegion.disabled = false;
     selectSecondRegion.disabled = true;
-    selectSecondRegion.selectedIndex = 0;
-    yearEnd.innerHTML = '<option value="">Selecciona un año</option>';
-    yearStart.innerHTML = '<option value="">Selecciona un año</option>';
-    yearEnd.disabled = true;
-    yearStart.disabled = true;
-  });
-  selectSecondRegion.addEventListener("change", function (e) {
-    updateCountrySelect(e, selectSecondLocation);
-  });
+  } else if (searchType.value === "continent") {
+    // Habilitar búsqueda por continente
+    locationsSelect.forEach((reset) =>
+      resetSelect(reset, "Selecciona un país")
+    );
+    regionsSelect.forEach((select) => {
+      select.disabled = false;
+      select.selectedIndex = 0;
+    });
+    firstCountryDiv.style.display = "none";
+    secondCountryDiv.style.display = "none";
+    firstCountryByRegionDiv.style.display = "flex";
+    secondCountryByRegionDiv.style.display = "flex";
 
-  // Eventos BtnConsultar
-  btnConsultar.addEventListener("click", validarFormulario);
-
-  /* ################################ Estructurar con API ###################################### */
-
-  // Evento de seleccionar tipo de búsqueda
-  searchType.addEventListener("change", function () {
-    if (this.value === "country") {
-      selectFirstOnlyLocation.disabled = false;
-      selectSecondOnlyLocation.disabled = true;
-      selectSecondOnlyLocation.innerHTML =
-        "<option value=''>Selecciona un país</option>";
-      selectFirstOnlyLocation.innerHTML =
-        "<option value=''>Selecciona un país</option>";
-      populateCountries(selectFirstOnlyLocation);
-
-      firstCountryDiv.style.display = "flex";
-      secondCountryDiv.style.display = "flex";
-      firstCountryByRegionDiv.style.display = "none";
-      secondCountryByRegionDiv.style.display = "none";
-      // Reiniciar el estado y la información que muestran
-      locationsSelect.forEach((select) => {
+    // Asegurarse de que solo el primero esté habilitado inicialmente
+    selectFirstRegion.disabled = false;
+    selectSecondRegion.disabled = true;
+  } else {
+    // Deshabilitar todos
+    locationsSelect
+      .concat(regionsSelect, onlyLocationsSelect)
+      .forEach((select) => {
         select.disabled = true;
-        select.innerHTML = "<option value=''>Selecciona un país</option>";
       });
-      regionsSelect.forEach((select) => {
-        select.disabled = true;
-        select.selectedIndex = 0;
-      });
-      selectFirstRegion.disabled = false;
-      selectSecondRegion.disabled = true;
-    } else if (this.value === "continent") {
-      locationsSelect.forEach((select) => (select.disabled = true));
-      regionsSelect.forEach((select) => (select.disabled = false));
-      firstCountryDiv.style.display = "none";
-      secondCountryDiv.style.display = "none";
-      firstCountryByRegionDiv.style.display = "flex";
-      secondCountryByRegionDiv.style.display = "flex";
-      // Reiniciar el estado y la información que muestran
-      locationsSelect.forEach((select) => {
-        select.disabled = true;
-        select.innerHTML = "<option value=''>Selecciona un país</option>";
-      });
-      regionsSelect.forEach((select) => {
-        select.disabled = true;
-        select.selectedIndex = 0;
-      });
-      selectFirstRegion.disabled = false;
-      selectSecondRegion.disabled = true;
-    } else {
-      locationsSelect.forEach((select) => (select.disabled = true));
-      regionsSelect.forEach((select) => (select.disabled = true));
-      onlyLocationsSelect.forEach((select) => (select.disabled = true));
-    }
-  });
+  }
+}
 
-  // Evento para actualizar la segunda location
-  selectFirstLocation.addEventListener("change", () => {
-    selectSecondRegion.selectedIndex = 0;
-    selectSecondRegion.disabled = selectFirstLocation.value ? false : true;
-    selectSecondLocation.disabled = true;
-    selectSecondLocation.selectedIndex = 0;
-    yearEnd.innerHTML = '<option value="">Selecciona un año</option>';
-    yearStart.innerHTML = '<option value="">Selecciona un año</option>';
-    yearEnd.disabled = true;
-    yearStart.disabled = true;
-
-    if (selectFirstLocation.value) {
-      generarAnios();
-    }
-  });
-
-  /* ######################################### Fin estructura con API ################################## */
-
-  firstCountryDiv.style.display = "none";
-  secondCountryDiv.style.display = "none";
-  firstCountryByRegionDiv.style.display = "none";
-  secondCountryByRegionDiv.style.display = "none";
-
-  // Configuraciones iniciales
-  fillRegions();
-  //inicializarGrafica();
-});
-
-// ✅ Mostrar u ocultar "Tipo de Energía" según la opción seleccionada
+// Muestra u oculta el contenedor de tipo de energía según la opción de estudio
 function toggleEnergyType() {
-  if (
-    selectStudyOption === "Capacidad Solar" ||
-    selectStudyOption === "Energía Renovable"
-  ) {
+  const studyValue = selectStudyOption.value;
+  if (studyValue === "solar" || studyValue === "renewable") {
     divEnergyType.style.display = "none";
     selectEnergyType.value = "";
   } else {
@@ -156,64 +112,53 @@ function toggleEnergyType() {
   }
 }
 
-// ✅ Cambiar el título al hacer clic en el botón
-function actualizarTitulo() {
-  let selectedOption = selectStudyOption.value;
-  h1TitleStudio.textContent = selectedOption || "Completa el formulario";
+function toggleYearsDiv(show) {
+  divYearStart.style.display = show ? "flex" : "none";
+  divYearEnd.style.display = show ? "flex" : "none";
 }
 
-/* ################################### API ####################################### */
+// Actualiza el título dinámico basado en la opción de estudio
+function actualizarTitulo() {
+  h1TitleStudio.textContent =
+    selectStudyOption.value || "Completa el formulario";
+}
+
+// Función genérica para obtener datos de la API
 async function getData(url) {
   try {
     const response = await fetch(url, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data; // Retorna los datos obtenidos
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    return await response.json();
   } catch (error) {
     console.error("Error al obtener los datos:", error);
-    return null; // Retorna null si hay un error
+    return null;
   }
 }
 
-// Obtener Regions y rellenar select's
+// Función para rellenar regiones
 async function fillRegions() {
-  selectFirstRegion.innerHTML =
-    "<option value=''>Selecciona una región</option>";
-  selectSecondRegion.innerHTML =
-    "<option value=''>Selecciona una región</option>";
-
+  resetSelect(selectFirstRegion, "Selecciona una región");
+  resetSelect(selectSecondRegion, "Selecciona una región");
   const data = await getData("http://localhost:8080/region");
   if (data) {
     data.forEach((region) => {
-      const option1 = document.createElement("option");
-      option1.value = region.id;
-      option1.textContent = region.name;
-
-      const option2 = option1.cloneNode(true);
-
-      selectFirstRegion.appendChild(option1);
-      selectSecondRegion.appendChild(option2);
+      const optionHTML = `<option value="${region.id}">${region.name}</option>`;
+      selectFirstRegion.innerHTML += optionHTML;
+      selectSecondRegion.innerHTML += optionHTML;
     });
+    selectFirstRegion.disabled = false;
   } else {
-    console.error("No se pudo obtener los datos.");
+    console.error("No se pudo obtener los datos de las regiones.");
   }
 }
 
-// ✅ Actualizar el selector de país según el continente seleccionado
+// Actualiza el select de países según la región seleccionada
 async function updateCountrySelect(event, locationSelect) {
   const regionId = event.target.value;
-
-  locationSelect.innerHTML = "<option value=''> Selecciona un país </option>";
-  locationSelect.disabled = true;
+  resetSelect(locationSelect, "Selecciona un país");
 
   if (regionId) {
     const locationsByRegion = await getData(
@@ -221,152 +166,240 @@ async function updateCountrySelect(event, locationSelect) {
     );
     if (locationsByRegion) {
       locationsByRegion.forEach((location) => {
-        let option = document.createElement("option");
-        option.value = location.id;
-        option.textContent = location.name;
+        // Evita duplicar si es la misma selección en el primer select
         if (
-          selectFirstRegion.value === selectSecondRegion.value &&
-          selectFirstLocation.value === option.value
+          !(
+            selectFirstRegion.value === selectSecondRegion.value &&
+            parseFloat(selectFirstLocation.value) === location.id
+          )
         ) {
-        } else locationSelect.appendChild(option);
+          locationSelect.innerHTML += `<option value="${location.id}">${location.name}</option>`;
+        }
       });
       locationSelect.disabled = false;
     }
   }
 }
 
+// Rellena el select de países para búsqueda por país
 async function populateCountries(selectElement) {
-  selectElement.innerHTML =
-    "<option id='' value=''>Selecciona un país</option>";
-  //Definir countries mediante la API
+  resetSelect(selectElement, "Selecciona un país");
   const countries = await getData("http://localhost:8080/location");
   if (countries) {
     countries.forEach((country) => {
-      let option = document.createElement("option");
-      option.value = country.id;
-      option.textContent = country.name;
-      if (selectFirstOnlyLocation.value == option.value) {
-      } else selectElement.appendChild(option);
+      if (selectFirstOnlyLocation.value !== country.id) {
+        selectElement.innerHTML += `<option value="${country.id}">${country.name}</option>`;
+      }
     });
+    selectElement.disabled = false;
   }
 }
-// ✅ Generar los años en los select
+
+// Genera los años disponibles según la opción de estudio y país seleccionado
 async function generarAnios() {
   let location1Id = selectFirstLocation.value || selectFirstOnlyLocation.value;
-
   const studyOption = selectStudyOption.value;
   let url = "";
-  yearsGetted = {};
 
+  yearsGetted = {};
   if (
-    studyOption === "solar" ||
-    studyOption === "renewable" ||
-    studyOption === "production" ||
-    studyOption === "consumption"
+    ["solar", "renewable", "production", "consumption"].includes(studyOption)
   ) {
     url = `http://localhost:8080/${studyOption}/year/${location1Id}`;
     yearsGetted = await getData(url);
   }
 
-  yearStart.innerHTML = '<option value="">Selecciona un año</option>';
-
+  resetSelect(yearStart, "Selecciona un año");
   if (yearsGetted) {
     yearsGetted.forEach((year) => {
-      let optionStart = new Option(year.year, year.year);
-      yearStart.appendChild(optionStart);
+      yearStart.innerHTML += `<option value="${year.year}">${year.year}</option>`;
     });
     yearStart.disabled = false;
   }
-
-  yearEnd.disabled = true;
-  yearEnd.innerHTML = '<option value="">Selecciona un año</option>';
+  resetSelect(yearEnd, "Selecciona un año");
 }
 
-// ✅ Actualizar los años finales según la selección de año inicial
+// Actualiza el select de año final basado en el año de inicio seleccionado
 function updateYearEnd() {
-  let startYear = parseFloat(yearStart.value);
+  const startYear = parseFloat(yearStart.value);
+  resetSelect(yearEnd, "Selecciona un año");
 
-  yearEnd.innerHTML = '<option value="">Selecciona un año</option>';
-  yearEnd.disabled = true;
-
-  if (startYear) {
+  if (startYear && yearsGetted) {
     yearsGetted.forEach((year) => {
       if (year.year >= startYear) {
-        let option = new Option(year.year, year.year);
-        yearEnd.appendChild(option);
+        yearEnd.innerHTML += `<option value="${year.year}">${year.year}</option>`;
       }
     });
-
     yearEnd.disabled = false;
   }
 }
 
-async function validarFormulario() {
+// Valida el formulario y realiza las consultas
+async function enviarFormulario() {
   const infoType = selectStudyOption.value;
   const energyType = selectEnergyType.value;
   const startYear = yearStart.value;
   const endYear = yearEnd.value;
   const firstLocation = selectFirstLocation.value;
   const secondLocation = selectSecondLocation.value;
-  let titleElement = document.getElementById("dynamicHeading");
 
   queryResult1 = {};
   queryResult2 = {};
-  let url = "";
 
-  if (infoType && energyType && startYear && endYear) {
-    titleElement.textContent = `${infoType} - ${energyType}`;
-    url = `http://localhost:8080/${infoType}/compare/${firstLocation}/${startYear}/${endYear}`;
+  if (infoType && firstLocation && startYear && endYear) {
+    dynamicHeading.textContent = `${infoType} - ${energyType}`;
+    let url = `http://localhost:8080/${infoType}/compare/${firstLocation}/${startYear}/${endYear}`;
     queryResult1 = await getData(url);
-    console.log(queryResult1); // Realizar lógica de gráfica
+    console.log(queryResult1);
 
     if (secondLocation) {
       url = `http://localhost:8080/${infoType}/compare/${secondLocation}/${startYear}/${endYear}`;
       queryResult2 = await getData(url);
-      console.log(queryResult2); // Realizar lógica de gráfica
+      console.log(queryResult2);
     }
+
+    inicializarGrafica();
   } else {
-    titleElement.textContent = "Completa el formulario";
+    dynamicHeading.textContent = "Completa el formulario";
   }
 }
 
+/* ############################## Eventos ############################### */
+document.addEventListener("DOMContentLoaded", () => {
+  // Eventos principales
+  selectStudyOption.addEventListener("change", () => {
+    toggleEnergyType();
+  });
+
+  yearStart.addEventListener("change", updateYearEnd);
+
+  btnConsultar.addEventListener("click", enviarFormulario);
+
+  // Región y país para búsqueda por continente
+  selectFirstRegion.addEventListener("change", (e) => {
+    updateCountrySelect(e, selectFirstLocation);
+    resetSelect(selectSecondLocation, "Selecciona un país");
+    resetSelect(selectSecondRegion, "Selecciona una región", false);
+    resetSelect(yearStart, "Selecciona un año");
+    resetSelect(yearEnd, "Selecciona un año");
+    selectSecondRegion.disabled = true;
+    toggleYearsDiv(false);
+  });
+  selectSecondRegion.addEventListener("change", (e) => {
+    updateCountrySelect(e, selectSecondLocation);
+  });
+
+  // Actualizar el segundo selector de país en función del primer país seleccionado
+  selectFirstLocation.addEventListener("change", () => {
+    selectSecondRegion.selectedIndex = 0;
+    selectSecondRegion.disabled = !selectFirstLocation.value;
+    resetSelect(selectSecondLocation, "Selecciona un país");
+    resetSelect(yearStart, "Selecciona un año");
+    resetSelect(yearEnd, "Selecciona un año");
+    if (selectFirstLocation.value) {
+      generarAnios();
+      toggleYearsDiv(true);
+    } else toggleYearsDiv(false);
+  });
+
+  // Evento para cambiar el tipo de búsqueda
+  searchType.addEventListener("change", updateSearchTypeUI);
+
+  // Estado inicial de divs
+  [
+    firstCountryDiv,
+    secondCountryDiv,
+    firstCountryByRegionDiv,
+    secondCountryByRegionDiv,
+    divYearStart,
+    divYearEnd,
+  ].forEach((div) => {
+    div.style.display = "none";
+  });
+
+  // Cargar regiones inicialmente
+  fillRegions();
+});
+
 /* ######################################################## Gráfica ###################################### */
 // ✅ Inicializar la gráfica con Chart.js
+let chartInstance = null; // Variable para almacenar la instancia de la gráfica
+
 function inicializarGrafica() {
   const ctx = document.getElementById("myChart").getContext("2d");
 
+  // Eliminar la gráfica anterior si existe
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  const years = []; // Lista de años sin Set
+  const dataLocation1 = [];
+  const dataLocation2 = [];
+  let location1 = "";
+  let location2 = "";
+
+  const energyMapping = {
+    hydro: "hydroData",
+    wind: "windData",
+    solar: "solarData",
+    bio: "bioData",
+  };
+
+  const energyKey = energyMapping[selectEnergyType.value]; // Clave de acceso a los datos de energía
+
+  function processData(queryResult, dataLocation, isPrimary) {
+    queryResult.forEach((data) => {
+      if (isPrimary && !years.includes(data.year)) {
+        years.push(data.year); // Solo agregamos años en la primera iteración
+      }
+
+      if (!location1) location1 = data.location; // Asignamos la primera ubicación
+
+      if (energyKey && data[energyKey] !== undefined) {
+        dataLocation.push(data[energyKey]);
+      } else if (data.percent !== undefined) {
+        dataLocation.push(data.percent);
+      }
+    });
+  }
+
+  processData(queryResult1, dataLocation1, true);
+
+  if (queryResult2.length > 0) {
+    processData(queryResult2, dataLocation2, false);
+    location2 = queryResult2[0].location; // Asignamos la ubicación del segundo conjunto de datos
+  }
+
+  // Asegurar que ambas listas tengan la misma longitud
+  while (dataLocation1.length < years.length) dataLocation1.push(null);
+  while (dataLocation2.length < years.length) dataLocation2.push(null);
+
+  console.log("Años:", years);
+  console.log("Datos 1:", dataLocation1);
+  console.log("Datos 2:", dataLocation2);
+
   const data = {
-    labels: [
-      "2015",
-      "2016",
-      "2017",
-      "2018",
-      "2019",
-      "2020",
-      "2021",
-      "2022",
-      "2023",
-    ],
+    labels: years,
     datasets: [
       {
-        label: "País 1",
-        data: [30, 45, 50, 60, 70, 85, 90, 95, 100], // Datos de País 1
+        label: location1 || "Sin datos",
+        data: dataLocation1,
         borderColor: "blue",
         backgroundColor: "rgba(0, 0, 255, 0.2)",
         fill: false,
       },
       {
-        label: "País 2",
-        data: [20, 35, 40, 55, 65, 75, 80, 85, 95], // Datos de País 2
+        label: location2 || "Sin datos",
+        data:
+          dataLocation2.length > 0
+            ? dataLocation2
+            : Array(years.length).fill(null),
         borderColor: "red",
         backgroundColor: "rgba(255, 0, 0, 0.2)",
         fill: false,
       },
     ],
-    options: {
-      responsive: true,
-      maintainAspectRatio: false, // Permite que el canvas se ajuste al contenedor
-    },
   };
 
   const config = {
@@ -389,14 +422,14 @@ function inicializarGrafica() {
         y: {
           title: {
             display: true,
-            text: "Tipo de Información",
+            text: "Valores",
           },
         },
       },
     },
   };
 
-  new Chart(ctx, config);
+  chartInstance = new Chart(ctx, config); // Guardar la instancia de la gráfica
 }
 
 function actualizarGrafica() {
@@ -460,13 +493,12 @@ function actualizarGrafica() {
 // Función para manejar el cambio de media query
 function handleResize() {
   if (mobileQuery.matches) {
-    console.log("📱 Modo móvil activado (ancho < 480px)");
     inicializarGrafica();
   } else if (tabletQuery.matches) {
-    console.log("📟 Modo tablet activado (480px - 768px)");
+    inicializarGrafica();
+  } else if (miniPcQuery.matches) {
     inicializarGrafica();
   } else {
-    console.log("🖥️ Pantalla grande activada (> 768px)");
     inicializarGrafica();
   }
 }
@@ -475,6 +507,10 @@ const mobileQuery = window.matchMedia("(max-width: 480px)");
 const tabletQuery = window.matchMedia(
   "(min-width: 481px) and (max-width: 768px)"
 );
+const miniPcQuery = window.matchMedia(
+  "(min-width: 769px) and (max-width: 1028px)"
+);
 
 mobileQuery.addEventListener("change", handleResize);
 tabletQuery.addEventListener("change", handleResize);
+miniPcQuery.addEventListener("change", handleResize);
