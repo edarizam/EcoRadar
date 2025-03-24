@@ -47,4 +47,11 @@ public interface ConsumptionRepository extends JpaRepository<Consumption, Intege
             "c.location.id, c.location.name) " +
             "FROM Consumption c ")
     Set<LocationDataDTO> findLocationsAvailable();
+
+    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+            "c.location.id, c.location.name) " +
+            "FROM Consumption c " +
+            "WHERE c.location.region.id = :regionId")
+    Set<LocationDataDTO> findLocationsAvailableByRegion(@Param("regionId") Integer regionId);
+
 }

@@ -47,4 +47,11 @@ public interface RenewablePercentRepository extends JpaRepository<RenewablePerce
             "r.location.id, r.location.name) " +
             "FROM RenewablePercent r ")
     Set<LocationDataDTO> findLocationsAvailable();
+
+    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+            "r.location.id, r.location.name) " +
+            "FROM RenewablePercent r " +
+            "WHERE r.location.region.id = :regionId")
+    Set<LocationDataDTO> findLocationsAvailableByRegion(@Param("regionId") Integer regionId);
+
 }

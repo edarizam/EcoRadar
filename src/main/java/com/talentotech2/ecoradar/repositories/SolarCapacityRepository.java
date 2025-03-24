@@ -47,4 +47,11 @@ public interface SolarCapacityRepository extends JpaRepository<SolarCapacity, In
             "s.location.id, s.location.name) " +
             "FROM SolarCapacity s ")
     Set<LocationDataDTO> findLocationsAvailable();
+
+    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+            "s.location.id, s.location.name) " +
+            "FROM SolarCapacity s " +
+            "WHERE s.location.region.id = :regionId")
+    Set<LocationDataDTO> findLocationsAvailableByRegion(@Param("regionId") Integer regionId);
+
 }
