@@ -39,4 +39,9 @@ public class SolarCapacityService {
     public List<LocationDataDTO> findLocationsAvailable() {
         return new ArrayList<>(solarCapacityRepository.findLocationsAvailable());
     }
+
+    public List<LocationDataDTO> findLocationsAvailableByRegion(Integer regionId) {
+        return new ArrayList<>(solarCapacityRepository.findLocationsAvailable());
+    }
+
 }
