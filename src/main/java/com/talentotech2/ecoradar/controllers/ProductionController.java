@@ -6,14 +6,12 @@ import com.talentotech2.ecoradar.services.ProductionService;
 import com.talentotech2.ecoradar.util.DefaultPageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
 @RequestMapping("/production")
 public class ProductionController {
