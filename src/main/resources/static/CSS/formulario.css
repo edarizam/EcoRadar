@@ -9,6 +9,9 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 📌 Contenedor principal (Horizontal y Responsive) */
@@ -17,7 +20,7 @@ body {
   flex-direction: row; /* Asegura alineación horizontal */
   flex-wrap: nowrap; /* Evita que pasen a otra línea */
   gap: 10px; /* Espaciado entre los formularios */
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   max-width: 100%;
   overflow-x: auto; /* Permite desplazamiento horizontal si no caben */
@@ -30,8 +33,8 @@ body {
   padding: 15px;
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  width: auto; /* Ancho fijo para mantener la consistencia */
-  min-width: auto;
+  width: 220px; /* Ancho fijo para mantener la consistencia */
+  min-width: 220px;
   height: 160px;
   display: flex;
   flex-direction: column;
@@ -97,6 +100,15 @@ body {
 }
 
 /* 🎯 Responsividad */
+@media (min-width: 768px) {
+  .chart-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto; /* Añadido margen superior e inferior para mejor espaciado */
+    padding: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     width: calc(
@@ -118,6 +130,13 @@ body {
 
 @media (max-width: 480px) {
   .container {
-    width: 100%; /* Un contenedor por fila en pantallas muy pequeñas */
+    min-width: 220px;
+    height: 160px;
+    padding: 1rem; /* Un contenedor por fila en pantallas muy pequeñas */
+  }
+
+  .chart-container {
+    width: 100%;
+    padding: 10px;
   }
 }
