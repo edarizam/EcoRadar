@@ -43,15 +43,15 @@ public interface ProductionRepository extends JpaRepository<Production, Integer>
             "WHERE p.location.id = :locationId ")
     List<YearDataDTO> findYearsAvailableByLocation(@Param("locationId") Integer locationId);
 
-    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+    @Query ("SELECT DISTINCT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
             "p.location.id, p.location.name) " +
             "FROM Production p ")
-    Set<LocationDataDTO> findLocationsAvailable();
+    List<LocationDataDTO> findLocationsAvailable();
 
-    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+    @Query ("SELECT DISTINCT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
             "p.location.id, p.location.name) " +
             "FROM Production p " +
             "WHERE p.location.region.id = :regionId")
-    Set<LocationDataDTO> findLocationsAvailableByRegion(@Param("regionId") Integer regionId);
+    List<LocationDataDTO> findLocationsAvailableByRegion(@Param("regionId") Integer regionId);
 
 }

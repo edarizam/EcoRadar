@@ -43,15 +43,15 @@ public interface RenewablePercentRepository extends JpaRepository<RenewablePerce
             "WHERE r.location.id = :locationId ")
     List<YearDataDTO> findYearsAvailableByLocation(@Param("locationId") Integer locationId);
 
-    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+    @Query ("SELECT DISTINCT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
             "r.location.id, r.location.name) " +
             "FROM RenewablePercent r ")
-    Set<LocationDataDTO> findLocationsAvailable();
+    List<LocationDataDTO> findLocationsAvailable();
 
-    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+    @Query ("SELECT DISTINCT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
             "r.location.id, r.location.name) " +
             "FROM RenewablePercent r " +
             "WHERE r.location.region.id = :regionId")
-    Set<LocationDataDTO> findLocationsAvailableByRegion(@Param("regionId") Integer regionId);
+    List<LocationDataDTO> findLocationsAvailableByRegion(@Param("regionId") Integer regionId);
 
 }

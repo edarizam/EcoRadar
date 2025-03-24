@@ -29,11 +29,11 @@ public class ConsumptionServices {
     }
 
     public List<LocationDataDTO> findLocationsAvailable() {
-        return new ArrayList<>(consumptionRepository.findLocationsAvailable());
+        return consumptionRepository.findLocationsAvailable();
     }
 
     public List<LocationDataDTO> findLocationsAvailableByRegionId(Integer regionId) {
-        return new ArrayList<>(consumptionRepository.findLocationsAvailableByRegion(regionId));
+        return consumptionRepository.findLocationsAvailableByRegion(regionId);
     }
 
 }

@@ -36,11 +36,11 @@ public class RenewablePercentService {
     }
 
     public List<LocationDataDTO> findLocationsAvailable() {
-        return new ArrayList<>(renewablePercentRepository.findLocationsAvailable());
+        return renewablePercentRepository.findLocationsAvailable();
     }
 
     public List<LocationDataDTO> findLocationsAvailableByRegion(Integer regionId) {
-        return new ArrayList<>(renewablePercentRepository.findLocationsAvailableByRegion(regionId));
+        return renewablePercentRepository.findLocationsAvailableByRegion(regionId);
     }
 
 }

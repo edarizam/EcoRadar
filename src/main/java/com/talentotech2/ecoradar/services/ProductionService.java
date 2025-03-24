@@ -30,11 +30,11 @@ public class ProductionService {
     }
 
     public List<LocationDataDTO> findLocationsAvailable() {
-        return new ArrayList<>(productionRepository.findLocationsAvailable());
+        return productionRepository.findLocationsAvailable();
     }
 
     public List<LocationDataDTO> findLocationsAvailableByRegion(Integer regionId) {
-        return new ArrayList<>(productionRepository.findLocationsAvailableByRegion(regionId));
+        return productionRepository.findLocationsAvailableByRegion(regionId);
     }
 
 }
