@@ -36,6 +36,10 @@ public class SolarCapacityService {
         return solarCapacityRepository.findYearsAvailableByLocation(locationId);
     }
 
+    public List<Integer> findYearsAvailableToRank() {
+        return solarCapacityRepository.findYearsAvailableToRank();
+    }
+
     public List<LocationDataDTO> findLocationsAvailable() {
         return solarCapacityRepository.findLocationsAvailable();
     }

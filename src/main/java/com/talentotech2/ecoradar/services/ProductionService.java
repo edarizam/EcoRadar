@@ -29,6 +29,10 @@ public class ProductionService {
         return productionRepository.findYearsAvailableByLocation(locationId);
     }
 
+    public List<Integer> findYearsAvailableToRank() {
+        return productionRepository.findYearsAvailableToRank();
+    }
+
     public List<LocationDataDTO> findLocationsAvailable() {
         return productionRepository.findLocationsAvailable();
     }

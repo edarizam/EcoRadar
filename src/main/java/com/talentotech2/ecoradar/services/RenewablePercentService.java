@@ -35,6 +35,10 @@ public class RenewablePercentService {
         return renewablePercentRepository.findYearsAvailableByLocation(locationId);
     }
 
+    public List<Integer> findYearsAvailableToRank() {
+        return renewablePercentRepository.findYearsAvailableToRank();
+    }
+
     public List<LocationDataDTO> findLocationsAvailable() {
         return renewablePercentRepository.findLocationsAvailable();
     }

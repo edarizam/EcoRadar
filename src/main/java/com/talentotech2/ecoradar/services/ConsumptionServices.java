@@ -28,6 +28,10 @@ public class ConsumptionServices {
         return consumptionRepository.findYearsAvailableByLocation(locationId);
     }
 
+    public List<Integer> findYearsAvailableToRank() {
+        return consumptionRepository.findYearsAvailableToRank();
+    }
+
     public List<LocationDataDTO> findLocationsAvailable() {
         return consumptionRepository.findLocationsAvailable();
     }
