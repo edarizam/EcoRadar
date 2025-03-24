@@ -42,6 +42,28 @@ let yearsGetted = {};
 let queryResult1 = {};
 let queryResult2 = {};
 
+// Escucha cambios en "Tipo de Información"
+selectStudyOption.addEventListener("change", function () {
+  if (this.value !== "") {
+    selectEnergyType.disabled = false; // Activa "Tipo de Energía"
+  } else {
+    selectEnergyType.disabled = true;
+    selectEnergyType.value = ""; // Reinicia selección
+    searchType.disabled = true;
+    searchType.value = ""; // Reinicia selección
+  }
+});
+
+// Escucha cambios en "Tipo de Energía"
+selectEnergyType.addEventListener("change", function () {
+  if (this.value !== "") {
+    searchType.disabled = false; // Activa "Búsqueda por Continente o País"
+  } else {
+    searchType.disabled = true;
+    searchType.value = ""; // Reinicia selección
+  }
+});
+
 /* ########################## Funciones Auxiliares ########################### */
 
 // Resetea un select con una opción por defecto
@@ -51,6 +73,45 @@ const resetSelect = (selectElement, defaultOption, letEmpty = true) => {
   selectElement.disabled = true;
   selectElement.selectedIndex = 0;
 };
+/* ############################################################# */
+document.addEventListener("DOMContentLoaded", function () {
+  // Elementos del DOM
+  const selectStudyOption = document.getElementById("studyOption");
+  const selectEnergyType = document.getElementById("energyType");
+  const searchType = document.getElementById("searchType");
+
+  // Desactivar selects al inicio
+  selectEnergyType.disabled = true;
+  searchType.disabled = true;
+
+  // Evento: Cuando se elige una opción en "Tipo de Información"
+  selectStudyOption.addEventListener("change", function () {
+    if (this.value !== "") {
+      selectEnergyType.disabled = false; // Activa "Tipo de Energía"
+    } else {
+      resetSelect(selectEnergyType, "Selecciona un tipo de energía");
+      resetSelect(searchType, "Selecciona una opción de búsqueda");
+    }
+  });
+
+  // Evento: Cuando se elige una opción en "Tipo de Energía"
+  selectEnergyType.addEventListener("change", function () {
+    if (this.value !== "") {
+      searchType.disabled = false; // Activa "Búsqueda por Continente o País"
+    } else {
+      resetSelect(searchType, "Selecciona una opción de búsqueda");
+    }
+  });
+
+  /* ########################## Función Auxiliar ########################### */
+  function resetSelect(selectElement, defaultText) {
+    selectElement.innerHTML = `<option value="">${defaultText}</option>`;
+    selectElement.disabled = true;
+    selectElement.value = ""; // Reinicia la selección
+  }
+});
+
+/* ########################################################################## */
 
 // Actualiza el estado de la UI en función del tipo de búsqueda
 function updateSearchTypeUI() {
