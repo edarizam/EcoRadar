@@ -1,5 +1,6 @@
 package com.talentotech2.ecoradar.repositories;
 
+import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.PercentageDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.model.SolarCapacity;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface SolarCapacityRepository extends JpaRepository<SolarCapacity, Integer> {
@@ -40,4 +42,9 @@ public interface SolarCapacityRepository extends JpaRepository<SolarCapacity, In
             "FROM SolarCapacity s " +
             "WHERE s.location.id = :locationId ")
     List<YearDataDTO> findYearsAvailableByLocation(@Param("locationId") Integer locationId);
+
+    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+            "s.location.id, s.location.name) " +
+            "FROM SolarCapacity s ")
+    Set<LocationDataDTO> findLocationsAvailable();
 }

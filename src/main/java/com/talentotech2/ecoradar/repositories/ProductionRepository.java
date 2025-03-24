@@ -1,6 +1,7 @@
 package com.talentotech2.ecoradar.repositories;
 
 import com.talentotech2.ecoradar.dto.DefaultDataDTO;
+import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.model.Production;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ProductionRepository extends JpaRepository<Production, Integer> {
@@ -40,5 +42,10 @@ public interface ProductionRepository extends JpaRepository<Production, Integer>
             "FROM Production p " +
             "WHERE p.location.id = :locationId ")
     List<YearDataDTO> findYearsAvailableByLocation(@Param("locationId") Integer locationId);
+
+    @Query ("SELECT new com.talentotech2.ecoradar.dto.LocationDataDTO(" +
+            "p.location.id, p.location.name) " +
+            "FROM Production p ")
+    Set<LocationDataDTO> findLocationsAvailable();
 
 }
