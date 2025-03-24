@@ -10,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
-@RequestMapping("/percents/renewable")
+@RequestMapping("/renewable")
 public class RenewablePercentController {
 
     @Autowired

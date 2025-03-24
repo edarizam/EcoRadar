@@ -29,6 +29,9 @@ const yearStart = document.getElementById("yearStart");
 const yearEnd = document.getElementById("yearEnd");
 
 const btnConsultar = document.getElementById("consultarBtn");
+let queryResult1 = {};
+let queryResult2 = {};
+
 const h1TitleStudio = document.querySelector("div h1");
 const myChart = document.getElementById("myChart");
 
@@ -57,20 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Eventos BtnConsultar
-  btnConsultar.addEventListener("click", actualizarTitulo);
-  btnConsultar.addEventListener("click", actualizarGrafica);
-  btnConsultar.addEventListener("click", function () {
-    let infoType = selectStudyOption.value;
-    let energyType = document.getElementById("energyType").value;
-    let titleElement = document.getElementById("dynamicHeading");
-
-    if (infoType && energyType) {
-      titleElement.textContent = `${infoType} - ${energyType}`;
-      //actualizarGrafica();
-    } else {
-      titleElement.textContent = "Completa el formulario";
-    }
-  });
+  btnConsultar.addEventListener("click", validarFormulario);
 
   /* ################################ Estructurar con API ###################################### */
 
@@ -266,14 +256,17 @@ async function generarAnios() {
 
   const studyOption = selectStudyOption.value;
   let url = "";
+  yearsGetted = {};
 
-  if (studyOption === "solar" || studyOption === "renewable") {
-    url = `http://localhost:8080/percent/${studyOption}/year/${location1Id}`;
-  } else if (studyOption === "production" || studyOption === "consumption") {
+  if (
+    studyOption === "solar" ||
+    studyOption === "renewable" ||
+    studyOption === "production" ||
+    studyOption === "consumption"
+  ) {
     url = `http://localhost:8080/${studyOption}/year/${location1Id}`;
+    yearsGetted = await getData(url);
   }
-
-  yearsGetted = await getData(url);
 
   yearStart.innerHTML = '<option value="">Selecciona un año</option>';
 
@@ -305,6 +298,35 @@ function updateYearEnd() {
     });
 
     yearEnd.disabled = false;
+  }
+}
+
+async function validarFormulario() {
+  const infoType = selectStudyOption.value;
+  const energyType = selectEnergyType.value;
+  const startYear = yearStart.value;
+  const endYear = yearEnd.value;
+  const firstLocation = selectFirstLocation.value;
+  const secondLocation = selectSecondLocation.value;
+  let titleElement = document.getElementById("dynamicHeading");
+
+  queryResult1 = {};
+  queryResult2 = {};
+  let url = "";
+
+  if (infoType && energyType && startYear && endYear) {
+    titleElement.textContent = `${infoType} - ${energyType}`;
+    url = `http://localhost:8080/${infoType}/compare/${firstLocation}/${startYear}/${endYear}`;
+    queryResult1 = await getData(url);
+    console.log(queryResult1); // Realizar lógica de gráfica
+
+    if (secondLocation) {
+      url = `http://localhost:8080/${infoType}/compare/${secondLocation}/${startYear}/${endYear}`;
+      queryResult2 = await getData(url);
+      console.log(queryResult2); // Realizar lógica de gráfica
+    }
+  } else {
+    titleElement.textContent = "Completa el formulario";
   }
 }
 
