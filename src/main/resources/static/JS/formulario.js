@@ -44,8 +44,8 @@ const defaultValues = {
   searchType: "Selecciona una opción de búsqueda",
   firstRegion: "Selecciona una región",
   secondRegion: "Selecciona una región",
-  firstLocation: "Selecciona un país",
-  secondLocation: "Selecciona un país",
+  firstLocation: "Selecciona una locación",
+  secondLocation: "Selecciona una locación",
   yearStart: "Selecciona un año",
   yearEnd: "Selecciona un año",
 };
@@ -95,7 +95,7 @@ function updateSearchTypeUI() {
   if (searchType.value === "country") {
     // Habilitar búsqueda por país
     selectFirstOnlyLocation.disabled = false;
-    resetSelect(selectSecondOnlyLocation, "Selecciona un país");
+    resetSelect(selectSecondOnlyLocation, defaultValues["secondLocation"]);
     populateCountries(selectFirstOnlyLocation);
 
     firstCountryDiv.style.display = "flex";
@@ -105,7 +105,7 @@ function updateSearchTypeUI() {
     hideElements(divYearStart, divYearEnd);
 
     locationsSelect.forEach((reset) =>
-      resetSelect(reset, "Selecciona un país")
+      resetSelect(reset, defaultValues["firstLocation"])
     );
     regionsSelect.forEach((select) => {
       select.disabled = true;
@@ -116,7 +116,7 @@ function updateSearchTypeUI() {
   } else if (searchType.value === "continent") {
     // Habilitar búsqueda por continente
     locationsSelect.forEach((reset) =>
-      resetSelect(reset, "Selecciona un país")
+      resetSelect(reset, defaultValues["firstLocation"])
     );
     regionsSelect.forEach((select) => {
       select.disabled = false;
@@ -219,7 +219,7 @@ async function fillRegions() {
 async function updateCountrySelect(event, locationSelect) {
   const regionId = event.target.value;
   const studyInfo = studyOption.value;
-  resetSelect(locationSelect, "Selecciona un país");
+  resetSelect(locationSelect, defaultValues["firstLocation"]);
 
   if (regionId && studyInfo) {
     const locationsByRegion = await getData(
@@ -244,7 +244,7 @@ async function updateCountrySelect(event, locationSelect) {
 
 // Rellena el select de países para búsqueda por país
 async function populateCountries(selectElement) {
-  resetSelect(selectElement, "Selecciona un país");
+  resetSelect(selectElement, defaultValues["firstLocation"]);
   let countries = false;
   const studyInfo = studyOption.value;
 
@@ -253,7 +253,7 @@ async function populateCountries(selectElement) {
   }
   if (countries) {
     countries.forEach((country) => {
-      if (selectFirstOnlyLocation.value !== country.id) {
+      if (parseFloat(selectFirstOnlyLocation.value) !== country.id) {
         selectElement.innerHTML += `<option value="${country.id}">${country.name}</option>`;
       }
     });
@@ -306,8 +306,10 @@ async function enviarFormulario() {
   const energyType = selectEnergyType.value;
   const startYear = yearStart.value;
   const endYear = yearEnd.value;
-  const firstLocation = selectFirstLocation.value;
-  const secondLocation = selectSecondLocation.value;
+  const firstLocation =
+    selectFirstLocation.value || selectFirstOnlyLocation.value;
+  const secondLocation =
+    selectSecondLocation.value || selectSecondOnlyLocation.value;
 
   queryResult1 = {};
   queryResult2 = {};
@@ -435,6 +437,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Ruta de selección Location only
+  selectFirstOnlyLocation.addEventListener("change", () => {
+    resetMultipleSelects(
+      [selectSecondOnlyLocation, "secondLocation"],
+      [yearStart, "yearStart"],
+      [yearEnd, "yearEnd"]
+    );
+
+    hideElements(divYearStart, divYearEnd);
+
+    if (selectFirstOnlyLocation.value) {
+      generarAnios();
+      toggleYearsDiv(true);
+
+      populateCountries(selectSecondOnlyLocation);
+      selectSecondOnlyLocation.disabled = false;
+    }
+  });
+
   // Evento para cambiar el tipo de búsqueda
   searchType.addEventListener("change", updateSearchTypeUI);
 
@@ -503,12 +524,8 @@ function inicializarGrafica() {
   }
 
   // Asegurar que ambas listas tengan la misma longitud
-  while (dataLocation1.length < years.length) dataLocation1.push(null);
-  while (dataLocation2.length < years.length) dataLocation2.push(null);
-
-  console.log("Años:", years);
-  console.log("Datos 1:", dataLocation1);
-  console.log("Datos 2:", dataLocation2);
+  while (dataLocation1.length < years.length) dataLocation1.unshift(null);
+  while (dataLocation2.length < years.length) dataLocation2.unshift(null);
 
   const data = {
     labels: years,
