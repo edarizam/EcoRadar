@@ -286,12 +286,13 @@
               return await getData(url);
             }
 
-            function actualizarDatos(energia, orden = "desc") {
+            async function actualizarDatos(energia, orden = "desc") {
               const tipo = selecttype.value;
               const anio = selectyear.value;
               if (!tipo || !anio) return;
 
-              const data = obtenerDatos(energia, tipo, anio, orden);
+              const data = await obtenerDatos(energia, tipo, anio, orden);
+              console.log(data);
               const energyKey = energyMapping[energia];
               actualizarGrafico(energia, data, energyKey);
               actualizarTabla(energia, data, energyKey);
@@ -350,6 +351,10 @@
                 .join("");
 
               table.style.display = "table";
+
+              document.getElementById(`columna-${energia}`).textContent =
+                traductor[selecttype.value][0].toUpperCase() +
+                traductor[selecttype.value].substring(1);
             }
 
             function actualizarTitulos(energia, tipo, anio, orden) {
