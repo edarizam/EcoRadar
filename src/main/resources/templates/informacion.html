@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-  
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,125 +8,168 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../static/CSS/informacion.css" />
+    <link rel="stylesheet" href="CSS/informacion.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --primary-color: #315C2B;
-      --dark-hover: #284822;
-      --dark-active: #1F3A1B;
-      --navbar-bg: #181F1C;
-      --navbar-hover: #9EA93F;
-    }
+    <style>
+      :root {
+        --primary-color: #315c2b;
+        --dark-hover: #284822;
+        --dark-active: #1f3a1b;
+        --navbar-bg: #181f1c;
+        --navbar-hover: #9ea93f;
+      }
 
-    .btn-bd-primary, .btn-primary {
-      --bs-btn-font-weight: 600;
-      --bs-btn-color: #fff;
-      --bs-btn-bg: var(--primary-color);
-      --bs-btn-border-color: var(--primary-color);
-      --bs-btn-hover-bg: var(--dark-hover);
-      --bs-btn-hover-border-color: var(--dark-hover);
-      --bs-btn-focus-shadow-rgb: 49, 92, 43;
-      --bs-btn-active-bg: var(--dark-active);
-      --bs-btn-active-border-color: var(--dark-active);
-    }
+      .btn-bd-primary,
+      .btn-primary {
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: #fff;
+        --bs-btn-bg: var(--primary-color);
+        --bs-btn-border-color: var(--primary-color);
+        --bs-btn-hover-bg: var(--dark-hover);
+        --bs-btn-hover-border-color: var(--dark-hover);
+        --bs-btn-focus-shadow-rgb: 49, 92, 43;
+        --bs-btn-active-bg: var(--dark-active);
+        --bs-btn-active-border-color: var(--dark-active);
+      }
 
-    .btn-outline-primary {
-      color: var(--primary-color) !important;
-      border-color: var(--primary-color) !important;
-    }
-    .btn-outline-primary:hover {
-      background-color: var(--primary-color) !important;
-      color: white !important;
-    }
+      .btn-outline-primary {
+        color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+      }
+      .btn-outline-primary:hover {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+      }
 
-    .navbar-custom {
-      background-color: var(--navbar-bg) !important;
-    }
-    .navbar-custom .nav-link {
-      color: white !important;
-    }
-    .navbar-custom .nav-link:hover {
-      color: var(--navbar-hover) !important;
-    }
-  </style>
+      .navbar-custom {
+        background-color: var(--navbar-bg) !important;
+      }
+      .navbar-custom .nav-link {
+        color: white !important;
+      }
+      .navbar-custom .nav-link:hover {
+        color: var(--navbar-hover) !important;
+      }
+    </style>
   </head>
   <body>
-
-  <header data-bs-theme="dark">
-    <nav class="navbar navbar-expand-md navbar-custom fixed-top">
-      <div class="container-fluid">
-        <a href="/">
-          <img src="/img/Ecoradarlogo.png" alt="Logo" style="width: 80px; height: 80px; padding: 0; margin: 0;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" th:href="@{/informacion}">Información</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" th:href="@{/rankings}">Rankings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" th:href="@{/formularioinfo}">Comparación</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" th:href="@{/contacto}">Conócenos</a>
-            </li>
-
-          </ul>
+    <header data-bs-theme="dark">
+      <nav class="navbar navbar-expand-md navbar-custom fixed-top">
+        <div class="container-fluid">
+          <a href="/">
+            <img
+              src="img/Ecoradarlogo.png"
+              alt="Logo"
+              style="width: 80px; height: 80px; padding: 0; margin: 0"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  th:href="@{/informacion}"
+                  >Información</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  th:href="@{/rankings}"
+                  >Rankings</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  th:href="@{/formularioinfo}"
+                  >Comparación</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" th:href="@{/contacto}">Conócenos</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-primary me-2">
+              Login
+            </button>
+            <button type="button" class="btn btn-primary">Sign-up</button>
+          </div>
         </div>
-        <div class="col-md-3 text-end">
-          <button type="button" class="btn btn-outline-primary me-2">Login</button>
-          <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
   </body>
   <body>
     <div class="container">
       <h1 class="titulo">Energías Renovables</h1>
 
       <div class="contenedor">
-        <img src="../static/img/eolic.jpg" alt="Energía Eólica" />
+        <img src="img/eolic.jpg" alt="Energía Eólica" />
         <div class="texto">
           <h2 class="fw-bold">Energía Eólica</h2>
           <p class="descripcion">
-            Es una fuente de energía renovable que aprovecha la fuerza del viento para generar electricidad. Se basa en la conversión de la energía cinética del viento en energía mecánica a través de aerogeneradores, que posteriormente la transforman en energía eléctrica mediante un generador.
+            Es una fuente de energía renovable que aprovecha la fuerza del
+            viento para generar electricidad. Se basa en la conversión de la
+            energía cinética del viento en energía mecánica a través de
+            aerogeneradores, que posteriormente la transforman en energía
+            eléctrica mediante un generador.
           </p>
         </div>
       </div>
 
       <div class="contenedor flex-row-reverse">
-        <img src="../static/img/solar.png" alt="Energía Solar" />
+        <img src="img/solar.png" alt="Energía Solar" />
         <div class="texto">
           <h2 class="fw-bold">Energía Solar</h2>
           <p class="descripcion">
-            Es una fuente de energía renovable que se obtiene a partir de la radiación del sol. Es una de las formas más limpias y abundantes de energía, utilizada para generar electricidad o calor a través de diferentes tecnologías.
+            Es una fuente de energía renovable que se obtiene a partir de la
+            radiación del sol. Es una de las formas más limpias y abundantes de
+            energía, utilizada para generar electricidad o calor a través de
+            diferentes tecnologías.
           </p>
         </div>
       </div>
 
       <div class="contenedor">
-        <img src="../static/img/hidra.jpg" alt="Energía Hidráulica" />
+        <img src="img/hidra.jpg" alt="Energía Hidráulica" />
         <div class="texto">
           <h2 class="fw-bold">Energía Hidráulica</h2>
           <p class="descripcion">
-            Es una fuente de energía renovable que aprovecha el movimiento del agua para generar electricidad. Se basa en la conversión de la energía cinética y potencial del agua en energía mecánica mediante turbinas hidroeléctricas, que posteriormente la transforman en energía eléctrica a través de un generador.
+            Es una fuente de energía renovable que aprovecha el movimiento del
+            agua para generar electricidad. Se basa en la conversión de la
+            energía cinética y potencial del agua en energía mecánica mediante
+            turbinas hidroeléctricas, que posteriormente la transforman en
+            energía eléctrica a través de un generador.
           </p>
         </div>
       </div>
 
       <div class="contenedor flex-row-reverse">
-        <img src="../static/img/bio.jpg" alt="Bioenergía" />
+        <img src="img/bio.jpg" alt="Bioenergía" />
         <div class="texto">
           <h2 class="fw-bold">Bioenergía o Energía de Biomasa</h2>
           <p class="descripcion">
-            Es una fuente de energía renovable que se obtiene a partir de materiales orgánicos como residuos vegetales, restos agrícolas, madera, desechos animales y microorganismos. Se utiliza para generar electricidad, calor y biocombustibles, contribuyendo a la reducción del uso de combustibles fósiles y a la economía circular.
+            Es una fuente de energía renovable que se obtiene a partir de
+            materiales orgánicos como residuos vegetales, restos agrícolas,
+            madera, desechos animales y microorganismos. Se utiliza para generar
+            electricidad, calor y biocombustibles, contribuyendo a la reducción
+            del uso de combustibles fósiles y a la economía circular.
           </p>
         </div>
       </div>
@@ -141,19 +183,47 @@
       </div>
 
       <h1 class="titulo">Capacidad Solar en el Mundo</h1>
-      <iframe title="Capacidad Solar en el Mundo" aria-label="Mapa" id="datawrapper-chart-ll20M" src="https://datawrapper.dwcdn.net/ll20M/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="369" data-external="1"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}}))}();
+      <iframe
+        title="Capacidad Solar en el Mundo"
+        aria-label="Mapa"
+        id="datawrapper-chart-ll20M"
+        src="https://datawrapper.dwcdn.net/ll20M/1/"
+        scrolling="no"
+        frameborder="0"
+        style="width: 0; min-width: 100% !important; border: none"
+        height="369"
+        data-external="1"
+      ></iframe>
+      <script type="text/javascript">
+        !(function () {
+          "use strict";
+          window.addEventListener("message", function (a) {
+            if (void 0 !== a.data["datawrapper-height"]) {
+              var e = document.querySelectorAll("iframe");
+              for (var t in a.data["datawrapper-height"])
+                for (var r, i = 0; (r = e[i]); i++)
+                  if (r.contentWindow === a.source) {
+                    var d = a.data["datawrapper-height"][t] + "px";
+                    r.style.height = d;
+                  }
+            }
+          });
+        })();
       </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/JS/mapdata.js"></script>
-    <script src="../static/JS/worldmap.js"></script>
-    <script src="../static/JS/informacion.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="JS/mapdata.js"></script>
+      <script src="JS/worldmap.js"></script>
+      <script src="JS/informacion.js"></script>
 
-    <a href="formularioinfo.html" id="consulta-info"
-      >🔍 Consultar más información</a
-    >
+      <a th:href="@{/formularioinfo}" id="consulta-info"
+        >🔍 Consultar más información</a
+      >
     </div>
     <footer class="bg-dark text-white text-center py-3">
-      <p>&copy; 2025 EcoRadar &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Contacto</a></p>
+      <p>
+        &copy; 2025 EcoRadar &middot; <a href="#">Privacy</a> &middot;
+        <a href="#">Terms</a> &middot; <a href="#">Contacto</a>
+      </p>
     </footer>
   </body>
 </html>
