@@ -20,12 +20,6 @@ const traductor = {
 let charts = {};
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".ordenar").forEach((button) => {
-    button.addEventListener("click", function () {
-      actualizarDatos(this.dataset.energia, this.dataset.orden);
-    });
-  });
-
   async function getData(url) {
     try {
       const response = await fetch(url, {
@@ -60,12 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const energyKey = energyMapping[energia];
 
     actualizarGrafico(energia, data, energyKey);
-    actualizarTabla(selecttype, energia, data, energyKey);
+    actualizarTabla(selecttype, energia, data, energyKey, orden);
     actualizarTitulos(energia, traductor[tipo], anio, orden);
     manejarPlaceholder(energia, true);
   }
 
   function actualizarGrafico(energia, data, tipo) {
+    data = data.slice(0, 10);
     const ctx = document.getElementById(`chart${energia}`).getContext("2d");
     if (!ctx) return;
 
@@ -90,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function actualizarTabla(selecttype, energia, data, tipo) {
+  function actualizarTabla(selecttype, energia, data, tipo, orden) {
     const table = document.getElementById(`energyTable-${energia}`);
     const tbody = table.querySelector("tbody");
 
@@ -101,20 +96,29 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    tbody.innerHTML = data
+    // Ordenar los datos según el parámetro 'orden'
+    const sortedData = [...data]
+      .filter((d) => d[tipo] > 0)
+      .sort((a, b) =>
+        orden === "desc" ? b[tipo] - a[tipo] : a[tipo] - b[tipo]
+      );
+
+    // Generar filas de la tabla
+    tbody.innerHTML = sortedData
       .map(
         (d, index) => `
-                      <tr>
-                          <td>${index + 1}</td>
-                          <td>${d.location}</td>
-                          <td>${d[tipo].toFixed(2)}</td>
-                      </tr>
-                      `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${d.location}</td>
+                    <td>${d[tipo].toFixed(2)}</td>
+                </tr>
+            `
       )
       .join("");
 
     table.style.display = "table";
 
+    // Actualizar la columna de la tabla con la traducción adecuada
     document.getElementById(`columna-${energia}`).textContent =
       traductor[selecttype.value][0].toUpperCase() +
       traductor[selecttype.value].substring(1);
@@ -124,10 +128,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const chartTitle = document.getElementById(`chartTitle-${energia}`);
     const tableTitle = document.getElementById(`tableTitle-${energia}`);
 
+    // Determinar el texto según el orden
+    const ordenTexto = orden === "desc" ? "mayor" : "menor";
+
     chartTitle.innerText = `Top 10 países con mayor ${tipo} de energía ${energia} en ${anio}`;
     chartTitle.style.display = "block";
 
-    tableTitle.innerText = `Lista completa de países con mayor ${tipo} de energía ${energia} en ${anio}`;
+    tableTitle.innerText = `Lista completa de países con ${ordenTexto} ${tipo} de energía ${energia} en ${anio}`;
     tableTitle.style.display = "block";
   }
 
@@ -135,6 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const placeholder = document.getElementById(`placeholder-${energia}`);
     placeholder.style.display = mostrar ? "none" : "block";
   }
+
+  // ################################ Eventos #######################
 
   // ################################ Hydro ##################
   const selectHydro = [...document.getElementsByClassName("tipoEnergia")].find(
@@ -145,13 +154,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ...document.getElementsByClassName("anioEnergia"),
   ].find((select) => select.dataset.energia === "Hidráulica");
 
-  console.log(selectHydro);
-  console.log(selectHydroYear);
-
   selectHydroYear.disabled = true;
 
   selectHydro.addEventListener("change", async function () {
     const energytype = selectHydro.value;
+    selectHydroYear.innerHTML =
+      '<option value="" disabled selected>Año</option>';
     const years =
       (await getData(`http://localhost:8080/${energytype}/year`)) || [];
     years.forEach((year) => {
@@ -179,6 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   selectWind.addEventListener("change", async function () {
     const energytype = selectWind.value;
+    selectWindYear.innerHTML =
+      '<option value="" disabled selected>Año</option>';
     const years =
       (await getData(`http://localhost:8080/${energytype}/year`)) || [];
     years.forEach((year) => {
@@ -207,6 +217,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   selectSolar.addEventListener("change", async function () {
     const energytype = selectSolar.value;
+    selectSolarYear.innerHTML =
+      '<option value="" disabled selected>Año</option>';
     const years =
       (await getData(`http://localhost:8080/${energytype}/year`)) || [];
     years.forEach((year) => {
@@ -234,6 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   selectBio.addEventListener("change", async function () {
     const energytype = selectBio.value;
+    selectBioYear.innerHTML = '<option value="" disabled selected>Año</option>';
     const years =
       (await getData(`http://localhost:8080/${energytype}/year`)) || [];
     years.forEach((year) => {
@@ -247,5 +260,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   selectBioYear.addEventListener("change", function () {
     actualizarDatos(selectBio, selectBioYear, selectBio.dataset.energia);
+  });
+
+  document.querySelectorAll(".ordenar").forEach((button) => {
+    button.addEventListener("click", function () {
+      const energia = this.dataset.energia;
+      const orden = this.dataset.orden;
+
+      let selectEnergia, selectEnergiaYear;
+
+      switch (energia) {
+        case "Hidráulica":
+          selectEnergia = selectHydro;
+          selectEnergiaYear = selectHydroYear;
+          break;
+        case "Eólica":
+          selectEnergia = selectWind;
+          selectEnergiaYear = selectWindYear;
+          break;
+        case "Solar":
+          selectEnergia = selectSolar;
+          selectEnergiaYear = selectSolarYear;
+          break;
+        case "Biomasa":
+          selectEnergia = selectBio;
+          selectEnergiaYear = selectBioYear;
+          break;
+        default:
+          console.error("Fuente de energía no reconocida:", energia);
+          return;
+      }
+
+      actualizarDatos(selectEnergia, selectEnergiaYear, energia, orden);
+    });
   });
 });

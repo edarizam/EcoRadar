@@ -6,6 +6,7 @@ import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.services.ConsumptionServices;
 import com.talentotech2.ecoradar.util.DefaultPageable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,16 +51,16 @@ public class ConsumptionController {
 
     @GetMapping("/{source}/ranking/{year}")
     public List<DefaultDataDTO> findTop10ConsumptionsByYear(@PathVariable int year, @PathVariable String source) {
-        DefaultPageable pageable = getPageableBySource(source);
-        return consumptionServices.findTop10ConsumptionByYearAndSource(year, pageable.getPageable());
+        DefaultPageable sortConfig = getSortBySource(source);
+        return consumptionServices.findTop10ConsumptionByYearAndSource(year, sortConfig.getSort());
     }
 
-    private DefaultPageable getPageableBySource(String source) {
+    private DefaultPageable getSortBySource(String source) {
         return switch (source.toLowerCase()) {
-            case "hydro" -> DefaultPageable.TOP_10_HYDRO;
-            case "wind" -> DefaultPageable.TOP_10_WIND;
-            case "solar" -> DefaultPageable.TOP_10_SOLAR;
-            case "bio" -> DefaultPageable.TOP_10_BIO_AND_OTHER;
+            case "hydro" -> DefaultPageable.HYDRO;
+            case "wind" -> DefaultPageable.WIND;
+            case "solar" -> DefaultPageable.SOLAR;
+            case "bio" -> DefaultPageable.BIO_AND_OTHER;
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de fuente no válida");
         };
     }

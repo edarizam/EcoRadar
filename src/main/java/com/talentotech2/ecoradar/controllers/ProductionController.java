@@ -53,15 +53,15 @@ public class ProductionController {
             @PathVariable int year, @PathVariable String source) {
 
         DefaultPageable pageable = getPageableBySource(source);
-        return productionService.findTop10ProductionByYearAndSource(year, pageable.getPageable());
+        return productionService.findTop10ProductionByYearAndSource(year, pageable.getSort());
     }
 
     private DefaultPageable getPageableBySource(String source) {
         return switch (source.toLowerCase()) {
-            case "hydro" -> DefaultPageable.TOP_10_HYDRO;
-            case "wind" -> DefaultPageable.TOP_10_WIND;
-            case "solar" -> DefaultPageable.TOP_10_SOLAR;
-            case "bio" -> DefaultPageable.TOP_10_BIO_AND_OTHER;
+            case "hydro" -> DefaultPageable.HYDRO;
+            case "wind" -> DefaultPageable.WIND;
+            case "solar" -> DefaultPageable.SOLAR;
+            case "bio" -> DefaultPageable.BIO_AND_OTHER;
             default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de fuente no válida");
         };
     }

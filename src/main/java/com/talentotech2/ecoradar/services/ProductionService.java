@@ -6,6 +6,7 @@ import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.repositories.ProductionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class ProductionService {
         return productionRepository.findProductionByLocationAndYearsRange(locationId, startYear, endYear);
     }
 
-    public List<DefaultDataDTO> findTop10ProductionByYearAndSource(int year, Pageable pageable) {
-        return productionRepository.findTop10ProductionByYear(year, pageable);
+    public List<DefaultDataDTO> findTop10ProductionByYearAndSource(int year, Sort sort) {
+        return productionRepository.findTop10ProductionByYear(year, sort);
     }
 
     public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
