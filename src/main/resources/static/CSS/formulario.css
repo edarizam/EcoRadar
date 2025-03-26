@@ -1,10 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
-
+h1 {
+  padding: 30px 0 16px;
+}
+.parrafoinicial {
+  padding: 0 12px 16px;
+  margin: 0 25px 0;
+}
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f0f2f5;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,18 +84,34 @@ body {
 }
 
 .btn-consultar {
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: white;
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--primary-color);
+  --bs-btn-border-color: var(--primary-color);
+  --bs-btn-hover-bg: var(--dark-hover);
+  --bs-btn-hover-border-color: var(--dark-hover);
+  --bs-btn-focus-shadow-rgb: 49, 92, 43;
+  --bs-btn-active-bg: var(--dark-active);
+  --bs-btn-active-border-color: var(--dark-active);
+
   font-size: 14px;
-  border: none;
-  border-radius: 20px;
+  border-radius: 8px; /* Ajusta según el diseño */
   padding: 10px 16px;
   cursor: pointer;
   transition: all 0.3s ease;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .btn-consultar:hover {
-  transform: scale(1.05);
+  background-color: var(--dark-hover);
+  border-color: var(--dark-hover);
+}
+
+.btn-consultar:active {
+  background-color: var(--dark-active);
+  border-color: var(--dark-active);
 }
 
 /* 📊 Contenedor del gráfico */
@@ -140,3 +163,5 @@ body {
     padding: 10px;
   }
 }
+
+
