@@ -4,7 +4,6 @@ import com.talentotech2.ecoradar.dto.DefaultDataDTO;
 import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.model.Production;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,7 +32,7 @@ public interface ProductionRepository extends JpaRepository<Production, Integer>
             "FROM Production p " +
             "WHERE p.year.year = :year " +
             "AND p.location.region.id <= 6")
-    List<DefaultDataDTO> findTop10ProductionByYear(
+    List<DefaultDataDTO> findTopProductionByYear(
             @Param("year") int year,
             Sort sort);
 

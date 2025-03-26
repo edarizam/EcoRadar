@@ -6,7 +6,6 @@ import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.services.ConsumptionServices;
 import com.talentotech2.ecoradar.util.DefaultPageable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,9 +49,9 @@ public class ConsumptionController {
     }
 
     @GetMapping("/{source}/ranking/{year}")
-    public List<DefaultDataDTO> findTop10ConsumptionsByYear(@PathVariable int year, @PathVariable String source) {
+    public List<DefaultDataDTO> findTopConsumptionsByYear(@PathVariable int year, @PathVariable String source) {
         DefaultPageable sortConfig = getSortBySource(source);
-        return consumptionServices.findTop10ConsumptionByYearAndSource(year, sortConfig.getSort());
+        return consumptionServices.findTopConsumptionByYearAndSource(year, sortConfig.getSort());
     }
 
     private DefaultPageable getSortBySource(String source) {

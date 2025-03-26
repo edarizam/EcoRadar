@@ -5,7 +5,6 @@ import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.repositories.ConsumptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +19,8 @@ public class ConsumptionServices {
         return consumptionRepository.findConsumptionByLocationAndYearsRange(locationId, startYear, endYear);
     }
 
-    public List<DefaultDataDTO> findTop10ConsumptionByYearAndSource(int year, Sort sort) {
-        return consumptionRepository.findTop10ConsumptionsByYear(year, sort);
+    public List<DefaultDataDTO> findTopConsumptionByYearAndSource(int year, Sort sort) {
+        return consumptionRepository.findTopConsumptionsByYear(year, sort);
     }
 
     public List<YearDataDTO> findYearsByLocationId(Integer locationId) {
