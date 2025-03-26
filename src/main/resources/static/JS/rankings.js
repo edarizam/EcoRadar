@@ -103,12 +103,16 @@ document.addEventListener("DOMContentLoaded", () => {
         orden === "desc" ? b[tipo] - a[tipo] : a[tipo] - b[tipo]
       );
 
+    const lenSortedData = sortedData.length;
+
     // Generar filas de la tabla
     tbody.innerHTML = sortedData
       .map(
         (d, index) => `
                 <tr>
-                    <td>${index + 1}</td>
+                    <td>${
+                      orden === "desc" ? index + 1 : lenSortedData - index
+                    }</td>
                     <td>${d.location}</td>
                     <td>${d[tipo].toFixed(2)}</td>
                 </tr>
