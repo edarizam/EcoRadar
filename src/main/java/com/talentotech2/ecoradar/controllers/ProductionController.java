@@ -49,11 +49,11 @@ public class ProductionController {
     }
 
     @GetMapping("/{source}/ranking/{year}")
-    public List<DefaultDataDTO> findTop10ProductionsByYear(
+    public List<DefaultDataDTO> findTopProductionsByYear(
             @PathVariable int year, @PathVariable String source) {
 
         DefaultPageable pageable = getPageableBySource(source);
-        return productionService.findTop10ProductionByYearAndSource(year, pageable.getSort());
+        return productionService.findTopProductionByYearAndSource(year, pageable.getSort());
     }
 
     private DefaultPageable getPageableBySource(String source) {

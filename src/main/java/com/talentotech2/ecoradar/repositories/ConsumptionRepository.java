@@ -4,7 +4,6 @@ import com.talentotech2.ecoradar.dto.DefaultDataDTO;
 import com.talentotech2.ecoradar.dto.LocationDataDTO;
 import com.talentotech2.ecoradar.dto.YearDataDTO;
 import com.talentotech2.ecoradar.model.Consumption;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,7 +32,7 @@ public interface ConsumptionRepository extends JpaRepository<Consumption, Intege
             "FROM Consumption c " +
             "WHERE c.year.year = :year " +
             "AND c.location.region.id <= 6")
-    List<DefaultDataDTO> findTop10ConsumptionsByYear(
+    List<DefaultDataDTO> findTopConsumptionsByYear(
             @Param("year") int year,
             Sort sort);
 
