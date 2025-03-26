@@ -35,6 +35,7 @@ const yearEnd = document.getElementById("yearEnd");
 const btnConsultar = document.getElementById("consultarBtn");
 /* const h1TitleStudio = document.querySelector("div h1"); */
 const dynamicHeading = document.getElementById("dynamicHeading");
+const divCharContainer = document.getElementById("chart-container");
 
 const myChart = document.getElementById("myChart");
 
@@ -87,7 +88,17 @@ function resetMultipleSelects(...selects) {
 
 // Función para ocultar múltiples elementos
 function hideElements(...elements) {
-  elements.forEach((el) => (el.style.display = "none"));
+  elements.forEach((el) => {
+    el.classList.remove("visible");
+    el.classList.add("hidden");
+  });
+}
+
+function unhideElements(...elements) {
+  elements.forEach((el) => {
+    el.classList.remove("hidden");
+    el.classList.add("visible");
+  });
 }
 
 // Actualiza el estado de la UI en función del tipo de búsqueda
@@ -102,7 +113,8 @@ function updateSearchTypeUI() {
     secondCountryDiv.style.display = "flex";
     firstCountryByRegionDiv.style.display = "none";
     secondCountryByRegionDiv.style.display = "none";
-    hideElements(divYearStart, divYearEnd);
+    hideElements(divYearStart, divYearEnd, divCharContainer, dynamicHeading);
+    unhideElements(firstCountryDiv, secondCountryDiv);
 
     locationsSelect.forEach((reset) =>
       resetSelect(reset, defaultValues["firstLocation"])
@@ -126,7 +138,8 @@ function updateSearchTypeUI() {
     secondCountryDiv.style.display = "none";
     firstCountryByRegionDiv.style.display = "flex";
     secondCountryByRegionDiv.style.display = "flex";
-    hideElements(divYearStart, divYearEnd);
+    hideElements(divYearStart, divYearEnd, divCharContainer, dynamicHeading);
+    unhideElements(firstCountryByRegionDiv, secondCountryByRegionDiv);
 
     // Asegurarse de que solo el primero esté habilitado inicialmente
     selectFirstRegion.disabled = false;
@@ -147,7 +160,9 @@ function updateSearchTypeUI() {
       firstCountryByRegionDiv,
       secondCountryByRegionDiv,
       divYearStart,
-      divYearEnd
+      divYearEnd,
+      divCharContainer,
+      dynamicHeading
     );
   }
 }
@@ -164,8 +179,10 @@ function toggleEnergyType() {
 }
 
 function toggleYearsDiv(show) {
-  divYearStart.style.display = show ? "flex" : "none";
-  divYearEnd.style.display = show ? "flex" : "none";
+  divYearStart.classList.add(show ? "visible" : "hidden");
+  divYearStart.classList.remove(show ? "hidden" : "visible");
+  divYearEnd.classList.add(show ? "visible" : "hidden");
+  divYearEnd.classList.remove(show ? "hidden" : "visible");
 }
 
 // Actualiza el título dinámico basado en la opción de estudio
@@ -318,15 +335,14 @@ async function enviarFormulario() {
     updateTitle(infoType, energyType);
     let url = `http://localhost:8080/${infoType}/compare/${firstLocation}/${startYear}/${endYear}`;
     queryResult1 = await getData(url);
-    console.log(queryResult1);
 
     if (secondLocation) {
       url = `http://localhost:8080/${infoType}/compare/${secondLocation}/${startYear}/${endYear}`;
       queryResult2 = await getData(url);
-      console.log(queryResult2);
     }
 
     inicializarGrafica();
+    unhideElements(divCharContainer, dynamicHeading);
   } else {
     dynamicHeading.textContent = "Completa el formulario";
   }
@@ -357,7 +373,9 @@ document.addEventListener("DOMContentLoaded", () => {
       firstCountryByRegionDiv,
       secondCountryByRegionDiv,
       divYearStart,
-      divYearEnd
+      divYearEnd,
+      divCharContainer,
+      dynamicHeading
     );
 
     if (this.value) {
@@ -387,7 +405,9 @@ document.addEventListener("DOMContentLoaded", () => {
       firstCountryByRegionDiv,
       secondCountryByRegionDiv,
       divYearStart,
-      divYearEnd
+      divYearEnd,
+      divCharContainer,
+      dynamicHeading
     );
 
     if (this.value) {
@@ -445,7 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
       [yearEnd, "yearEnd"]
     );
 
-    hideElements(divYearStart, divYearEnd);
+    hideElements(divYearStart, divYearEnd, divCharContainer, dynamicHeading);
 
     if (selectFirstOnlyLocation.value) {
       generarAnios();
@@ -466,7 +486,9 @@ document.addEventListener("DOMContentLoaded", () => {
     firstCountryByRegionDiv,
     secondCountryByRegionDiv,
     divYearStart,
-    divYearEnd
+    divYearEnd,
+    divCharContainer,
+    dynamicHeading
   );
 
   // Cargar regiones inicialmente
@@ -481,9 +503,7 @@ function inicializarGrafica() {
   const ctx = document.getElementById("myChart").getContext("2d");
 
   // Eliminar la gráfica anterior si existe
-  if (chartInstance) {
-    chartInstance.destroy();
-  }
+  if (chartInstance) chartInstance.destroy();
 
   const years = []; // Lista de años sin Set
   const dataLocation1 = [];
@@ -640,25 +660,17 @@ function actualizarGrafica() {
 
 // Función para manejar el cambio de media query
 function handleResize() {
-  if (mobileQuery.matches) {
-    inicializarGrafica();
-  } else if (tabletQuery.matches) {
-    inicializarGrafica();
-  } else if (miniPcQuery.matches) {
-    inicializarGrafica();
-  } else {
-    inicializarGrafica();
-  }
+  if (chartInstance) inicializarGrafica(); // Se ejecuta solo una vez sin importar el tamaño
 }
 
-const mobileQuery = window.matchMedia("(max-width: 480px)");
-const tabletQuery = window.matchMedia(
-  "(min-width: 481px) and (max-width: 768px)"
-);
-const miniPcQuery = window.matchMedia(
-  "(min-width: 769px) and (max-width: 1028px)"
-);
+const queries = [
+  window.matchMedia("(max-width: 480px)"),
+  window.matchMedia("(min-width: 481px) and (max-width: 768px)"),
+  window.matchMedia("(min-width: 769px) and (max-width: 1028px)"),
+];
 
-mobileQuery.addEventListener("change", handleResize);
-tabletQuery.addEventListener("change", handleResize);
-miniPcQuery.addEventListener("change", handleResize);
+// Agregar event listeners a todas las queries
+queries.forEach((query) => query.addEventListener("change", handleResize));
+
+// Ejecutar la función al cargar la página
+handleResize();
