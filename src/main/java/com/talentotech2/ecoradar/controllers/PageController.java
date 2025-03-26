@@ -21,6 +21,14 @@ public class PageController {
     public String rankings() {
         return "rankings";
     }
+    @GetMapping("/iniciarsesion")
+    public String iniciarsesion() {
+        return "iniciarsesion";
+    }
+    @GetMapping("/Registro")
+    public String Registro() {
+        return "Registro";
+    }
     @GetMapping("/informacion")
     public String informacion() {
         return "informacion";
