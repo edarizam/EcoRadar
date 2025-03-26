@@ -52,17 +52,24 @@ const defaultValues = {
 };
 
 const defaultTitlesStudyOptions = {
-  renewable: "Energía Renovable",
-  solar: "Energía Solar",
+  renewable: "% Energía Renovable",
+  solar: "% Capacidad Solar Instalada",
   consumption: "Consumo",
   production: "Producción",
 };
 
 const defaultTitlesEnergyTypes = {
-  hydro: "Energía Hidroeléctrica",
-  solar: "Energía Solar",
-  wind: "Energía Eólica",
-  bio: "Bioenergía y Otras Renovables",
+  hydro: "Energía Hidroeléctrica (TWh)",
+  solar: "Energía Solar (TWh)",
+  wind: "Energía Eólica (TWh)",
+  bio: "Bioenergía y Otras Renovables (TWh)",
+};
+
+const energyMapping = {
+  hydro: "hydroData",
+  wind: "windData",
+  solar: "solarData",
+  bio: "bioAndOtherData",
 };
 
 let yearsGetted = {};
@@ -510,13 +517,6 @@ function inicializarGrafica() {
   const dataLocation2 = [];
   let location1 = "";
   let location2 = "";
-
-  const energyMapping = {
-    hydro: "hydroData",
-    wind: "windData",
-    solar: "solarData",
-    bio: "bioData",
-  };
 
   const energyKey = energyMapping[selectEnergyType.value]; // Clave de acceso a los datos de energía
 
