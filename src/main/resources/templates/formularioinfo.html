@@ -108,10 +108,20 @@
             </ul>
           </div>
           <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2">
+            <button
+                    type="button"
+                    class="btn btn-outline-primary me-2"
+                    th:attr="onclick='window.location.href=\'' + @{/iniciarsesion} + '\''"
+            >
               Login
             </button>
-            <button type="button" class="btn btn-primary">Sign-up</button>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    th:attr="onclick='window.location.href=\'' + @{/Registro  } + '\''"
+            >
+              Sign-up
+            </button>
           </div>
         </div>
       </nav>
@@ -231,10 +241,9 @@
       <canvas id="myChart"></canvas>
     </div>
 
-    <footer class="bg-dark text-white text-center py-3 w-100">
+    <footer class="bg-dark text-white text-center py-3 w-100" >
       <p>
-        &copy; 2025 EcoRadar &middot; <a href="#">Privacy</a> &middot;
-        <a href="#">Terms</a> &middot; <a href="#">Contacto</a>
+        &copy; 2025 EcoRadar
       </p>
     </footer>
   </body>

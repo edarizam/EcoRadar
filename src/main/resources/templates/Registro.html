@@ -3,24 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>📝 Registro</title>
+    <title>Registro</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- <script
-      src="https://kit.fontawesome.com/a076d05399.js"
-      crossorigin="anonymous"
-    ></script> -->
     <style>
-      body {
-        font-family: "Poppins", sans-serif;
-      }
       .register-container {
         background: white;
         padding: 30px;
         border-radius: 15px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 3px 3px #181f1c;
         width: 400px;
         text-align: center;
         margin: auto;
@@ -33,20 +26,142 @@
       .form-control {
         border-radius: 10px;
         padding-left: 15px;
+        border-color: var(--primary-color) !important;
       }
       .btn-custom {
-        background-color: #28a745;
+        background-color: #315c2b;
         color: white;
         border-radius: 10px;
         font-weight: bold;
         transition: 0.3s;
       }
       .btn-custom:hover {
-        background-color: #218838;
+        background-color: #315c2b;
+      }
+    </style>
+    <style>
+      :root {
+        --primary-color: #315c2b;
+        --dark-hover: #284822;
+        --dark-active: #1f3a1b;
+        --navbar-bg: #181f1c;
+        --navbar-hover: #9ea93f;
+      }
+
+      .btn-bd-primary,
+      .btn-primary {
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: #fff;
+        --bs-btn-bg: var(--primary-color);
+        --bs-btn-border-color: var(--primary-color);
+        --bs-btn-hover-bg: var(--dark-hover);
+        --bs-btn-hover-border-color: var(--dark-hover);
+        --bs-btn-focus-shadow-rgb: 49, 92, 43;
+        --bs-btn-active-bg: var(--dark-active);
+        --bs-btn-active-border-color: var(--dark-active);
+      }
+
+      .btn-outline-primary {
+        color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+      }
+      .btn-outline-primary:hover {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+      }
+      .navbar-custom {
+        background-color: var(--navbar-bg) !important;
+      }
+      .navbar-custom .nav-link {
+        color: white !important;
+      }
+      .navbar-custom .nav-link:hover {
+        color: var(--navbar-hover) !important;
+      }
+      .footer {
+        background-color: #181f1c; /* Color oscuro para el footer */
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
       }
     </style>
   </head>
-  <body>
+  <header data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md navbar-custom fixed-top">
+      <div class="container-fluid">
+        <a href="/">
+          <img
+                  src="/img/EcoRadarLogo2.png"
+                  alt="Logo"
+                  style="width: 80px; height: 80px; padding: 0; margin: 0"
+          />
+        </a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a
+                      class="nav-link active"
+                      aria-current="page"
+                      th:href="@{/informacion}"
+              >Información</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                      class="nav-link active"
+                      aria-current="page"
+                      th:href="@{/rankings}"
+              >Rankings</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                      class="nav-link active"
+                      aria-current="page"
+                      th:href="@{/formularioinfo}"
+              >Comparación</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" th:href="@{/contacto}">Conócenos</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-3 text-end">
+          <button
+                  type="button"
+                  class="btn btn-outline-primary me-2"
+                  th:attr="onclick='window.location.href=\'' + @{/iniciarsesion} + '\''"
+          >
+            Login
+          </button>
+          <button
+                  type="button"
+                  class="btn btn-primary"
+                  th:attr="onclick='window.location.href=\'' + @{/Registro  } + '\''"
+          >
+            Sign-up
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <body style="padding-top: 75px">
     <div class="register-container">
       <h3>📝 Registro</h3>
       <form id="userForm">
@@ -87,14 +202,19 @@
           />
         </div>
         <button type="submit" class="btn btn-custom w-100">
-          ✅ Registrarse
+          Registrarse
         </button>
       </form>
       <p class="mt-3">
         ¿Ya tienes cuenta?
-        <a th:href="@{/iniciarsesion}"><strong>🔑 Inicia sesión</strong></a>
+        <a th:href="@{/iniciarsesion}"><strong>Inicia sesión</strong></a>
       </p>
     </div>
     <script src="JS/register.js"></script>
   </body>
+  <footer class="bg-dark footer">
+    <p>
+      &copy; 2025 EcoRadar
+    </p>
+  </footer>
 </html>
