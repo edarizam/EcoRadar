@@ -49,29 +49,32 @@
   <body>
     <div class="login-container">
       <h3>🔑 Iniciar Sesión</h3>
-      <form>
+      <div>
         <div class="mb-3">
           <input
-            type="email"
-            class="form-control"
-            placeholder="📧 Correo Electrónico"
+            type="text"
+            class="div-control"
+            placeholder="👤 Nombre de Usuario"
+            id="username"
             required
           />
         </div>
         <div class="mb-3">
           <input
             type="password"
-            class="form-control"
+            class="div-control"
             placeholder="🔒 Contraseña"
+            id="password"
             required
           />
         </div>
-        <button type="submit" class="btn btn-custom w-100">🚀 Ingresar</button>
-      </form>
+        <button id="submitBtn" class="btn btn-custom w-100">🚀 Ingresar</button>
+      </div>
       <p class="mt-3">
         ¿No tienes cuenta?
         <a href="Registro.html"><strong>📌 Regístrate aquí</strong></a>
       </p>
     </div>
+    <script src="JS/login.js"></script>
   </body>
 </html>
