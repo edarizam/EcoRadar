@@ -76,7 +76,7 @@ body {
 /* 📍 Botón de consulta */
 .btn-container {
   position: fixed;
-  bottom: 60%; /* Lo fija en la parte inferior con un pequeño margen */
+  bottom: 50%; /* Lo fija en la parte inferior con un pequeño margen */
   right: -30px;
   transform: translateX(-50%); /* Centra el botón horizontalmente */
   display: flex;
