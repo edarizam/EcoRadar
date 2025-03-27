@@ -1,28 +1,44 @@
-window.onload = function () {
-  history.pushState(null, "", location.href);
-  window.onpopstate = function () {
-    history.pushState(null, "", location.href);
-  };
-};
-
-window.addEventListener("beforeunload", (event) => {
-  event.preventDefault();
-  localStorage.removeItem("usuario");
-});
-
-document.addEventListener("contextmenu", (event) => event.preventDefault());
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "F12" || (event.ctrlKey && event.key === "u")) {
-    event.preventDefault();
-  }
-});
-
 const indexBtn = document.getElementById("indexBtn");
 const updateBtn = document.getElementById("updateBtn");
 const deleteBtn = document.getElementById("deleteBtn");
+const deleteModal = document.getElementById("deleteModal");
+const deleteCancelBtn = document.getElementById("deleteCancelBtn");
+const deleteConfirmBtn = document.getElementById("deleteConfirmBtn");
 
-indexBtn.addEventListener("click", () => {
+/* Funciones auxiliares */
+const returnHome = () => {
   localStorage.removeItem("usuario");
   window.location.href = "/";
+};
+
+/* Eventos */
+
+indexBtn.addEventListener("click", returnHome);
+
+deleteBtn.addEventListener("click", () =>
+  deleteModal.classList.remove("hidden")
+);
+
+deleteCancelBtn.addEventListener("click", () =>
+  deleteModal.classList.add("hidden")
+);
+
+deleteConfirmBtn.addEventListener("click", async () => {
+  const currentUser = JSON.parse(localStorage.getItem("usuario"));
+
+  if (!currentUser || !currentUser.id) {
+    alert("Error: No se encontró la cuenta del usuario.");
+    return;
+  }
+
+  try {
+    await fetch(`http://localhost:8080/user/delete/${currentUser.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    alert("Cuenta eliminada con éxito, regresando a la página principal");
+    returnHome();
+  } catch (error) {
+    alert("Ha ocurrido un error con el servidor, intente de nuevo más tarde");
+  }
 });
