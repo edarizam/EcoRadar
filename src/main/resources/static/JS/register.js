@@ -82,7 +82,8 @@ form.addEventListener("submit", async function (event) {
       body: JSON.stringify(user),
     });
     if (!response.ok) {
-      throw new Error(`Error al registrar usuario. Código: ${response.status}`);
+      alert(`Error al registrar usuario. Código: ${response.status}`);
+      return;
     }
 
     const data = await response.json();
@@ -91,6 +92,8 @@ form.addEventListener("submit", async function (event) {
 
     // Limpiar el formulario
     form.reset();
+    localStorage.setItem("usuario", JSON.stringify(data)); // Guarda el usuario en localStorage
+    window.location.href = "/coming-soon";
   } catch (error) {
     console.error("Error:", error);
     alert("Ocurrió un error al registrar el usuario. Inténtalo más tarde.");

@@ -33,5 +33,10 @@ public class PageController {
     public String informacion() {
         return "informacion";
     }
+    
+    @GetMapping("/coming-soon")
+    public String comingSoonPage() {
+        return "coming-soon"; // Thymeleaf renderizará `coming-soon.html`
+    }
 }
 
