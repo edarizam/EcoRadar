@@ -75,10 +75,14 @@ body {
 
 /* 📍 Botón de consulta */
 .btn-container {
-  width: 100%;
+  position: fixed;
+  bottom: 60%; /* Lo fija en la parte inferior con un pequeño margen */
+  right: -30px;
+  transform: translateX(-50%); /* Centra el botón horizontalmente */
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  width: auto; /* Ajusta el ancho según el contenido */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
 
 .btn-consultar {

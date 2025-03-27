@@ -422,9 +422,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  yearEnd.addEventListener("change", () =>
+    hideElements(divCharContainer, dynamicHeading)
+  );
+
   // Eventos principales
   selectStudyOption.addEventListener("change", toggleEnergyType);
-  yearStart.addEventListener("change", updateYearEnd);
+  yearStart.addEventListener("change", () => {
+    updateYearEnd();
+    hideElements(divCharContainer, dynamicHeading);
+  });
   btnConsultar.addEventListener("click", enviarFormulario);
 
   // Región y país para búsqueda por continente
@@ -439,10 +446,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     selectSecondRegion.disabled = true;
     toggleYearsDiv(false);
+    hideElements(divCharContainer, dynamicHeading);
   });
 
   selectSecondRegion.addEventListener("change", (e) => {
     updateCountrySelect(e, selectSecondLocation);
+    hideElements(divCharContainer, dynamicHeading);
   });
 
   // Actualizar el segundo selector de país en función del primer país seleccionado
@@ -462,7 +471,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       toggleYearsDiv(false);
     }
+    hideElements(divCharContainer, dynamicHeading);
   });
+
+  selectSecondLocation.addEventListener("change", () =>
+    hideElements(divCharContainer, dynamicHeading)
+  );
 
   // Ruta de selección Location only
   selectFirstOnlyLocation.addEventListener("change", () => {
@@ -482,6 +496,10 @@ document.addEventListener("DOMContentLoaded", () => {
       selectSecondOnlyLocation.disabled = false;
     }
   });
+
+  selectSecondOnlyLocation.addEventListener("change", () =>
+    hideElements(divCharContainer, dynamicHeading)
+  );
 
   // Evento para cambiar el tipo de búsqueda
   searchType.addEventListener("change", updateSearchTypeUI);
