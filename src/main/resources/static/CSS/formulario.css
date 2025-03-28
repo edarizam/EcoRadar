@@ -75,18 +75,15 @@ body {
 
 /* 📍 Botón de consulta */
 .btn-container {
-  position: fixed;
-  bottom: 50%; /* Lo fija en la parte inferior con un pequeño margen */
-  right: -30px;
-  transform: translateX(-50%); /* Centra el botón horizontalmente */
-  display: flex;
-  justify-content: center;
-  width: auto; /* Ajusta el ancho según el contenido */
-  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  text-align: center; /* Centra el botón si es necesario */
+  margin-top: 20px; /* Espaciado para que no quede pegado */
+  position: relative; /* Asegura que no esté fijo en la pantalla */
+  width: 100%; /* Opcional si quieres que el botón se adapte */
 }
 
+
 .btn-consultar {
-  --bs-btn-font-weight: 600;
+  --bs-btn-font-weight: 700; /* Aumenta el grosor de la letra */
   --bs-btn-color: #fff;
   --bs-btn-bg: var(--primary-color);
   --bs-btn-border-color: var(--primary-color);
@@ -96,9 +93,10 @@ body {
   --bs-btn-active-bg: var(--dark-active);
   --bs-btn-active-border-color: var(--dark-active);
 
-  font-size: 14px;
-  border-radius: 8px; /* Ajusta según el diseño */
-  padding: 10px 16px;
+  font-size: 16px; /* Aumenta el tamaño de la letra */
+  font-weight: bold; /* Hace que el texto sea más grueso */
+  border-radius: 10px; /* Bordes más suaves */
+  padding: 14px 20px; /* Aumenta el tamaño del botón */
   cursor: pointer;
   transition: all 0.3s ease;
   border: 1px solid var(--primary-color);
@@ -109,6 +107,8 @@ body {
 .btn-consultar:hover {
   background-color: var(--dark-hover);
   border-color: var(--dark-hover);
+  transform: scale(1.15); /* Aumenta más el tamaño en hover */
+  transition: transform 0.3s ease-in-out;
 }
 
 .btn-consultar:active {
