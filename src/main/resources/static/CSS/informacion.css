@@ -185,3 +185,9 @@ button:hover {
     padding: 10px 15px;
   }
 }
+/* Ajustar en pantallas pequeñas */
+@media (max-width: 768px) {
+  body {
+    padding-top: 100px; /* Ajusta según sea necesario */
+  }
+}
